@@ -1,0 +1,10 @@
+Install Microsoft eMbedded Visual Tools 3.0, accepting all defaults (I unticked VB);
+Download STLPort (I used 5.1.5) and unzip to your root directory
+Modify:
+\stlport\stlport\stl\config\user_config.h
+so as to uncomment:
+#define _STLP_NO_IOSTREAMS 1
+
+And for some reason, I need to do rebuild all followed by build to get it to build (rebuild all always gives a linker error! But the subsequent build fixes it!).  In fact, I need to hit "build" several times (less than 10 though!) to get it to link, not sure why.
+
+I also had to install the PocketPC 2002 SDK in order to get the Version stuff to link for some reason.

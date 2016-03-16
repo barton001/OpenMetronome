@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{0d9bac42-4e71-429b-b2cd-1ba2c19581c6}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{b509c4c5-f4bb-4c2e-8ef5-feefd39ed9a1}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{98dbfb1c-6e7f-425f-ba6e-9fd47e4c6a30}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+    <Filter Include="NewCore">
+      <UniqueIdentifier>{81cf0feb-096e-4bbd-9d94-990d63a9cdfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Support">
+      <UniqueIdentifier>{c6978a94-fa9d-4468-94a6-a22769145074}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main">
+      <UniqueIdentifier>{01d95595-7b81-4c88-b3a0-d7bbfacba145}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AboutDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HotKeyDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EditboxCatchKeypress.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="metronome.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StdAfx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NewCore\BeatBox_MID.cpp">
+      <Filter>NewCore</Filter>
+    </ClCompile>
+    <ClCompile Include="NewCore\BeatBox_WAV.cpp">
+      <Filter>NewCore</Filter>
+    </ClCompile>
+    <ClCompile Include="MetBlinker.cpp">
+      <Filter>NewCore</Filter>
+    </ClCompile>
+    <ClCompile Include="NewCore\WaveFile.cpp">
+      <Filter>NewCore</Filter>
+    </ClCompile>
+    <ClCompile Include="Support\BscBblDlg.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="Support\BscSubclassWnd.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="Support\BscToolTip.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="Support\cBscFileVersion.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="general_midi.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="group_beat.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="GroupEdit.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="metronomeDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="metronomeDlg_RegPersist.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="metronomeDlg_RegPersist_DragSize.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AboutDlg.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NewCore\BeatBox_MID.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NewCore\BeatBox_WAV.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Support\BscBblDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Support\BscSubclassWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Support\BscToolTip.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Support\cBscFileVersion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="general_midi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="group_beat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GroupEdit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NewCore\IBeatBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MetBlinker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MetDefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="metronome.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="metronomeDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="metronomeDlg_RegPersist.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="metronomeDlg_RegPersist_DragSize.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NewCore\WaveFile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\metronome.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="metronome.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\metronome.rc2">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>

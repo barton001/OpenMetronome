@@ -1,0 +1,834 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#define APSTUDIO_HIDDEN_SYMBOLS
+#include "windows.h"
+#undef APSTUDIO_HIDDEN_SYMBOLS
+#include "resource.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""windows.h""\r\n"
+    "#undef APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""resource.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.K.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENG)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\metronome.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 159, 114
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About Open Metronome"
+FONT 8, "MS Sans Serif"
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,7,6,20,20
+    LTEXT           "Open Metronome Version 89898",IDC_PROGRAM_TITLE,35,3,
+                    112,8,SS_NOPREFIX
+    LTEXT           "Copyright (C) 2004 David Johnston,",IDC_STATIC,35,12,
+                    123,8
+    DEFPUSHBUTTON   "OK",IDOK,57,77,44,14,WS_GROUP
+    LTEXT           "For updates and news visit",IDC_STATIC,41,93,85,8
+    LTEXT           "openmetronome.sourceforge.net",IDC_PINKANDAINT_URL,27,
+                    103,110,8,SS_NOTIFY
+    LTEXT           "2012 Mark Billington (code::Biscuit)",IDC_STATIC,35,21,
+                    113,8
+    LTEXT           "Released under the Gnu Public Licence (GPLv3)",
+                    IDC_STATIC,3,31,154,8
+    CTEXT           "Open Metronome is based upon and incorporates source code frome David Johnston's ""Weird Metronme""",
+                    IDC_STATIC,3,49,154,25
+    CTEXT           "Spanish Translation by Jairo Dallos",IDC_STATIC,0,40,
+                    154,8
+END
+
+IDD_METRONOME_DIALOG DIALOG DISCARDABLE  0, 0, 159, 169
+STYLE WS_MAXIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | 
+    WS_THICKFRAME
+CAPTION "Open Metronome"
+FONT 8, "MS Sans Serif"
+BEGIN
+    CONTROL         "&Straight Metronome",IDC_RADIO_PLAIN,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,0,1,78,10
+    CONTROL         "Simple &Measure",IDC_RADIO_MEASURE,"Button",
+                    BS_AUTORADIOBUTTON,0,12,64,10
+    CONTROL         "&Custom",IDC_RADIO_GROUP,"Button",BS_AUTORADIOBUTTON,0,
+                    24,40,10
+    EDITTEXT        IDC_BPMEASURE_EDIT,68,11,36,12,ES_AUTOHSCROLL | 
+                    ES_NUMBER | WS_DISABLED
+    CONTROL         "Spin1",IDC_BPMEASURE_SPIN,"msctls_updown32",
+                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
+                    UDS_ARROWKEYS | WS_DISABLED,96,11,7,12
+    EDITTEXT        IDC_GROUP_EDIT,41,24,117,11,ES_AUTOHSCROLL | WS_DISABLED
+    DEFPUSHBUTTON   "&Play",IDC_PLAY_BUTTON,128,1,30,22
+    CONTROL         "&Blnk",IDC_BLINK_CHECK,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,78,1,27,10
+    LTEXT           "&1",IDC_TICK_LABEL_1,2,37,8,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_TICK_COMBO_1,10,36,79,85,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Slider1",IDC_TICK_VOLUME_SLIDER1,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,88,38,28,10
+    CONTROL         "Slider1",IDC_BLINK_SIZE_SLIDER1,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,116,38,25,10
+    LTEXT           "&2",IDC_TICK_LABEL_2,2,49,8,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_TICK_COMBO_2,10,48,79,85,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Slider1",IDC_TICK_VOLUME_SLIDER2,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,88,50,28,10
+    CONTROL         "Slider1",IDC_BLINK_SIZE_SLIDER2,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,116,50,25,10
+    LTEXT           "&3",IDC_TICK_LABEL_3,2,61,8,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_TICK_COMBO_3,10,60,79,85,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Slider1",IDC_TICK_VOLUME_SLIDER3,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,88,62,28,10
+    CONTROL         "Slider1",IDC_BLINK_SIZE_SLIDER3,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,116,62,25,10
+    LTEXT           "&4",IDC_TICK_LABEL_4,2,73,8,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_TICK_COMBO_4,10,72,79,85,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Slider1",IDC_TICK_VOLUME_SLIDER4,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,88,74,28,10
+    CONTROL         "Slider1",IDC_BLINK_SIZE_SLIDER4,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,116,74,25,10
+    LTEXT           "&5",IDC_TICK_LABEL_5,2,85,8,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_TICK_COMBO_5,10,84,79,85,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Slider1",IDC_TICK_VOLUME_SLIDER5,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,88,86,28,10
+    CONTROL         "Slider1",IDC_BLINK_SIZE_SLIDER5,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,116,86,25,10
+    LTEXT           "&6",IDC_TICK_LABEL_6,2,97,8,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_TICK_COMBO_6,10,96,79,85,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Slider1",IDC_TICK_VOLUME_SLIDER6,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,88,98,28,10
+    CONTROL         "Slider1",IDC_BLINK_SIZE_SLIDER6,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,116,98,25,10
+    LTEXT           "&7",IDC_TICK_LABEL_7,2,109,8,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_TICK_COMBO_7,10,108,79,85,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Slider1",IDC_TICK_VOLUME_SLIDER7,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,88,110,28,10
+    CONTROL         "Slider1",IDC_BLINK_SIZE_SLIDER7,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,116,110,25,10
+    LTEXT           "&8",IDC_TICK_LABEL_8,2,121,8,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_TICK_COMBO_8,10,120,79,85,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Slider1",IDC_TICK_VOLUME_SLIDER8,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,88,122,28,10
+    CONTROL         "Slider1",IDC_BLINK_SIZE_SLIDER8,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,116,122,25,10
+    LTEXT           "&9",IDC_TICK_LABEL_9,2,133,8,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_TICK_COMBO_9,10,132,79,85,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Slider1",IDC_TICK_VOLUME_SLIDER9,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,88,134,28,10
+    CONTROL         "Slider1",IDC_BLINK_SIZE_SLIDER9,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,116,134,25,10
+    LTEXT           "&Tempo",IDC_TEMPO,2,144,23,8
+    CONTROL         "Slider1",IDC_BPMINUTE_SLIDER,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,24,144,113,10
+    EDITTEXT        IDC_BPMINUTE_EDIT,137,144,20,11,ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    PUSHBUTTON      "&Del",IDC_DELETE_PRESET_BUTTON,1,154,18,10
+    PUSHBUTTON      "&Exp",IDC_EXPORT_PRESET_BUTTON,20,154,18,10
+    PUSHBUTTON      "Sa&ve",IDC_SAVE_PRESET_BUTTON,40,154,26,10
+    LTEXT           "P&reset",IDC_PRESETS,137,155,24,8
+    COMBOBOX        IDC_PRESET_COMBO,67,154,69,85,CBS_DROPDOWN | 
+                    CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "",IDC_BEAT_INDICATOR,"Static",SS_BITMAP,105,2,20,20
+    CONTROL         "",IDC_BLINK_SIZE_1,"Static",SS_BITMAP,143,36,15,13
+    CONTROL         "",IDC_BLINK_SIZE_2,"Static",SS_BITMAP,143,48,15,13
+    CONTROL         "",IDC_BLINK_SIZE_3,"Static",SS_BITMAP,143,60,15,13
+    CONTROL         "",IDC_BLINK_SIZE_4,"Static",SS_BITMAP,143,72,15,13
+    CONTROL         "",IDC_BLINK_SIZE_5,"Static",SS_BITMAP,143,84,15,13
+    CONTROL         "",IDC_BLINK_SIZE_6,"Static",SS_BITMAP,143,96,15,13
+    CONTROL         "",IDC_BLINK_SIZE_7,"Static",SS_BITMAP,143,108,15,13
+    CONTROL         "",IDC_BLINK_SIZE_8,"Static",SS_BITMAP,143,120,15,13
+    CONTROL         "",IDC_BLINK_SIZE_9,"Static",SS_BITMAP,143,132,15,13
+END
+
+IDD_HOTKEY_MAP DIALOG DISCARDABLE  0, 0, 160, 178
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Hotkeys & Settings"
+FONT 8, "MS Sans Serif"
+BEGIN
+    GROUPBOX        "Hotkey Assignments",IDC_STATIC_FRAME_HOTKEYS,0,0,159,
+                    108
+    LTEXT           "&Increase Tempo",IDC_STATIC,7,12,52,8
+    EDITTEXT        IDC_EDIT_HOTKEY_TEMPO_UP,73,11,72,12,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    PUSHBUTTON      "X",IDC_BUTTON_X_TEMPO_UP,147,11,9,12
+    LTEXT           "&Decrease Tempo",IDC_STATIC,7,28,56,8
+    EDITTEXT        IDC_EDIT_HOTKEY_TEMPO_DN,73,26,72,12,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    PUSHBUTTON      "X",IDC_BUTTON_X_TEMPO_DN,147,26,9,12
+    LTEXT           "&Play / Stop",IDC_STATIC,7,43,36,8
+    EDITTEXT        IDC_EDIT_HOTKEY_PLAY,73,41,72,12,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    PUSHBUTTON      "X",IDC_BUTTON_X_PLAY,147,40,9,12
+    LTEXT           "&Straight Metronome",IDC_STATIC,7,57,62,8
+    EDITTEXT        IDC_EDIT_HOTKEY_STRAIGHT,73,56,72,12,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    PUSHBUTTON      "X",IDC_BUTTON_X_STRAIGHT,147,56,9,12
+    LTEXT           "Simple &Measure",IDC_STATIC,7,73,51,8
+    EDITTEXT        IDC_EDIT_HOTKEY_SIMPLE,73,71,72,12,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    PUSHBUTTON      "X",IDC_BUTTON_X_SIMPLE,147,71,9,12
+    LTEXT           "&Tap Rhythm",IDC_STATIC,7,87,40,8,NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT_HOTKEY_TAP,73,86,72,12,ES_AUTOHSCROLL | 
+                    ES_READONLY | NOT WS_VISIBLE
+    PUSHBUTTON      "X",IDC_BUTTON_X_TAP,147,86,9,12,NOT WS_VISIBLE
+    GROUPBOX        "Beats Per Minute",IDC_STATIC_FRAME_BPM,0,108,159,25
+    LTEXT           "Mi&n.",IDC_STATIC,7,119,14,8
+    EDITTEXT        IDC_EDIT_BPM_MIN,25,117,25,12,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "Ma&x.",IDC_STATIC,55,119,16,8
+    EDITTEXT        IDC_EDIT_BPM_MAX,73,117,25,12,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "In&c.",IDC_STATIC,105,119,13,8
+    EDITTEXT        IDC_EDIT_BPM_INC,123,117,25,12,ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    GROUPBOX        "WAV Export",IDC_STATIC_FRAME_WAV_EXP,0,135,159,25
+    LTEXT           "Number of &loops",IDC_STATIC,5,145,52,8
+    EDITTEXT        IDC_EDIT_WAV_EXP,73,143,25,12,ES_AUTOHSCROLL | ES_NUMBER
+    DEFPUSHBUTTON   "OK",IDOK,115,163,44,14,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,65,163,44,14,WS_GROUP
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 5,6,0,0
+ PRODUCTVERSION 5,6,0,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "Comments", "With thanks to David Johnston's ""Weird Metronome"": this project incorporates some of the Weird Metronome source\0"
+            VALUE "CompanyName", "code::Biscuit\0"
+            VALUE "FileDescription", "Open Metronome\0"
+            VALUE "FileVersion", "5, 6, 0, 0\0"
+            VALUE "InternalName", "oMet_WCE\0"
+            VALUE "LegalCopyright", "Copyright (C) 2004 David Johnston, 2009-2012 Mark Billington. Released under the GPL Licence.\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "oMet_WCE.exe\0"
+            VALUE "PrivateBuild", "\0"
+            VALUE "ProductName", "Open Metronome\0"
+            VALUE "ProductVersion", "5, 6, 0, 0\0"
+            VALUE "SpecialBuild", "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 152
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 106
+    END
+
+    IDD_METRONOME_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 152
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 162
+    END
+
+    IDD_HOTKEY_MAP, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 153
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 170
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MENUBAR MENU DISCARDABLE 
+BEGIN
+    MENUITEM "Hotkeys / Cfg",               ID_SETTINGS_HOTKEYS
+    MENUITEM "About",                       IDM_ABOUTBOX
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ABOUTBOX            "&About Open Metronome..."
+    IDS_TIP_StartString     "Start the metronome (Enter)"
+    IDS_TIP_StopString      "Stop the metronome (Enter)"
+    IDS_TIP_RADIO_PLAIN     "A plain beat using voice #1"
+    IDS_TIP_RADIO_MEASURE   "Emphasize the first beat of the measure using voice #2"
+    IDS_TIP_RADIO_GROUP     "Use a custom measure"
+    IDS_TIP_GROUP_EDIT      "For each beat, enter 0 for silence or a number from 1 to 9 for one of the voices below; putting several voices in brackets causes them all to sound simultaneously, e.g., 11(345)1 will cause voices 3 4 & 5 to sound simultaneously on the 3rd Beat."
+    IDS_TIP_BPMEASURE_EDIT  "The number of beats in your measure"
+    IDS_TIP_BPMINUTE_SLIDER "Change the speed of the metronome"
+    IDS_TIP_BPMINUTE_EDIT   "Set the speed of the metronome"
+    IDS_TIP_BLINK_CHECK     "Toggle the visual beat Display"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_TIP_VolumeSlider    "Set the volume of this voice"
+    IDS_TIP_BlinkerSlider   "Set the size of the blinker for this voice"
+    IDS_TIP_BlinkerSliderD  "The size of the blinker for this voice"
+    IDS_TIP_SoundCombo      "Choose an instrument for this voice"
+    IDS_TIP_SAVE_PRESET_BUTTON "Save these settings as a preset"
+    IDS_TIP_DELETE_PRESET_BUTTON "Delete the current preset"
+    IDS_TIP_PRESET_COMBO    "Choose a preset from the list or type a name to save a new one"
+    IDS_TIP_EXPORT_PRESET_BUTTON 
+                            "Export all saved configurations to a file that you can share with other users"
+    IDS_REDUCE_VOICE_VOL    ">Reduce Voice Volume!"
+    IDS_MISMATCHED_BRACKETS "Make sure you don't have mismatched parentheses in your custom measure definition"
+    IDS_MAX_VOICES_PER_BEAT "You are only allowed up to 9 instruments per beat"
+    IDS_AT_LEAST_1_BEAT     "Please enter a custom measure definition with at least one beat"
+    IDS_PLAY                "&Play"
+    IDS_STOP                "Sto&p"
+    IDS_PRESET_OVERWRITE    "You are about to save over the current preset.  Continue?"
+    IDS_PRESET_ALREADY_EXISTS "Preset Already Exists"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_PRESET_SAVE_FAIL    "Threre was an error opening the registry key.  Please limit preset names to letters and numbers."
+    IDS_TIP_GROUP_EDIT_EXT_WAV 
+                            "For each beat, enter 0 for silence or a number from 1 to 9 for one of the voices below; putting several voices in brackets causes them all to sound simultaneously, e.g., 11(345)1 will cause voices 3 4 & 5 to sound simultaneously on the 3rd Beat.  You can choose to play the first x beats of every n-beat bar at an alternate tempo, e.g., the first 3 beats of every 4-beat bar at 10% faster by using a prefix of ""[3/4@+10%]"".  Omit the ""%"" symbol to specify an absolute value for alternate beats per minute.  You can specify a negative percentage if you want."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_MIDI_ALPHA_000      "High Agogo"
+    IDS_MIDI_ALPHA_001      "Low Agogo"
+    IDS_MIDI_ALPHA_002      "Acoustic Bass Drum"
+    IDS_MIDI_ALPHA_003      "Ride Bell"
+    IDS_MIDI_ALPHA_004      "Hi Bongo"
+    IDS_MIDI_ALPHA_005      "Low Bongo"
+    IDS_MIDI_ALPHA_006      "Cabasa"
+    IDS_MIDI_ALPHA_007      "hand clap"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_MIDI_ALPHA_008      "Claves"
+    IDS_MIDI_ALPHA_009      "Cowbell"
+    IDS_MIDI_ALPHA_010      "Mute Cuica"
+    IDS_MIDI_ALPHA_011      "Open Cuica"
+    IDS_MIDI_ALPHA_012      "Bass Drum 1"
+    IDS_MIDI_ALPHA_013      "Mute Hi Conga"
+    IDS_MIDI_ALPHA_014      "Open Hi Conga"
+    IDS_MIDI_ALPHA_015      "Low Conga"
+    IDS_MIDI_ALPHA_016      "Chinese Cymbal"
+    IDS_MIDI_ALPHA_017      "Crash Cymbal 1"
+    IDS_MIDI_ALPHA_018      "Crash Cymbal 2"
+    IDS_MIDI_ALPHA_019      "Ride Cymbal 1"
+    IDS_MIDI_ALPHA_020      "Ride Cymbal 2"
+    IDS_MIDI_ALPHA_021      "Splash Cymbal"
+    IDS_MIDI_ALPHA_022      "Short Guiro"
+    IDS_MIDI_ALPHA_023      "Long Guiro"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_MIDI_ALPHA_024      "Closed Hi-hat"
+    IDS_MIDI_ALPHA_025      "Open Hi-hat"
+    IDS_MIDI_ALPHA_026      "Pedal Hi-hat"
+    IDS_MIDI_ALPHA_027      "Maracas"
+    IDS_MIDI_ALPHA_028      "Side Stick"
+    IDS_MIDI_ALPHA_029      "Acoustic Snare"
+    IDS_MIDI_ALPHA_030      "Electric Snare"
+    IDS_MIDI_ALPHA_031      "Tambourine"
+    IDS_MIDI_ALPHA_032      "High Timbale"
+    IDS_MIDI_ALPHA_033      "Low Timbale"
+    IDS_MIDI_ALPHA_034      "Low Floor Tom"
+    IDS_MIDI_ALPHA_035      "High Floor Tom"
+    IDS_MIDI_ALPHA_036      "Low Tom"
+    IDS_MIDI_ALPHA_037      "Low-Mid tom"
+    IDS_MIDI_ALPHA_038      "Hi Mid Tom"
+    IDS_MIDI_ALPHA_039      "High Tom"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_MIDI_ALPHA_040      "Mute Triangle"
+    IDS_MIDI_ALPHA_041      "Open Triangle"
+    IDS_MIDI_ALPHA_042      "Vibraslap"
+    IDS_MIDI_ALPHA_043      "Short Whistle"
+    IDS_MIDI_ALPHA_044      "Long Whistle"
+    IDS_MIDI_ALPHA_045      "Hi Wood Block"
+    IDS_MIDI_ALPHA_046      "Low Wood Block"
+END
+
+#endif    // English (U.K.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Spanish (Modern) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ESN)
+#ifdef _WIN32
+LANGUAGE LANG_SPANISH, SUBLANG_SPANISH_MODERN
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 159, 114
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Acerca de Open Metronome"
+FONT 8, "MS Sans Serif"
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,7,6,20,20
+    LTEXT           "Open Metronome                       ",
+                    IDC_PROGRAM_TITLE,34,3,112,8,SS_NOPREFIX
+    LTEXT           "Derechos de Autor ©2004 D. Johnston",IDC_STATIC,34,12,
+                    125,8
+    DEFPUSHBUTTON   "OK",IDOK,57,77,44,14,WS_GROUP
+    LTEXT           "Para actualizaciones y novedades visitar",IDC_STATIC,16,
+                    93,129,8
+    LTEXT           "openmetronome.sourceforge.net",IDC_PINKANDAINT_URL,27,
+                    103,110,8,SS_NOTIFY
+    LTEXT           "©2012 Mark Billington (code::Biscuit)",IDC_STATIC,34,21,
+                    123,8
+    LTEXT           "Publicado bajo la Licencia GNU PUBLIC(GPLv3)",
+                    IDC_STATIC,3,31,154,8
+    CTEXT           "Open Metronome esta basado e incorpora codigo escrito por David Johnston's ""Weird Metronome""",
+                    IDC_STATIC,3,49,154,25
+    CTEXT           "Traducción al español por Jairo Dallos",IDC_STATIC,0,40,
+                    154,8
+END
+
+IDD_HOTKEY_MAP DIALOG DISCARDABLE  0, 0, 159, 178
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Acesos de teclado y Parámetros"
+FONT 8, "MS Sans Serif"
+BEGIN
+    GROUPBOX        "Asignacion de Teclas",IDC_STATIC_FRAME_HOTKEYS,0,0,159,
+                    108
+    LTEXT           "&Incrementar Tempo",IDC_STATIC,7,12,62,8
+    EDITTEXT        IDC_EDIT_HOTKEY_TEMPO_UP,73,11,72,12,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    LTEXT           "Re&ducir Tempo",IDC_STATIC,7,28,50,8
+    EDITTEXT        IDC_EDIT_HOTKEY_TEMPO_DN,73,26,72,12,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    LTEXT           "&Ejecutar / Detener",IDC_STATIC,7,43,60,8
+    EDITTEXT        IDC_EDIT_HOTKEY_PLAY,73,41,72,12,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    LTEXT           "Metrónomo &Plano",IDC_STATIC,7,57,56,8
+    EDITTEXT        IDC_EDIT_HOTKEY_STRAIGHT,73,56,72,12,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    LTEXT           "Compás si&mple",IDC_STATIC,7,73,48,8
+    EDITTEXT        IDC_EDIT_HOTKEY_SIMPLE,73,71,72,12,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    LTEXT           "Identificar Ri&tmo",IDC_STATIC,7,87,52,8,NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT_HOTKEY_TAP,73,86,72,12,ES_AUTOHSCROLL | 
+                    ES_READONLY | NOT WS_VISIBLE
+    GROUPBOX        "Pulsos por Minuto",IDC_STATIC_FRAME_BPM,0,106,159,25
+    LTEXT           "Mí&n",IDC_STATIC,7,117,14,8
+    EDITTEXT        IDC_EDIT_BPM_MIN,25,115,25,12,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "Má&x.",IDC_STATIC,55,117,16,8
+    EDITTEXT        IDC_EDIT_BPM_MAX,73,115,25,12,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "In&c.",IDC_STATIC,105,117,13,8
+    EDITTEXT        IDC_EDIT_BPM_INC,123,115,25,12,ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    GROUPBOX        "WAV Export",IDC_STATIC_FRAME_WAV_EXP,0,135,159,25
+    LTEXT           "Number of &loops",IDC_STATIC,5,145,52,8
+    EDITTEXT        IDC_EDIT_WAV_EXP,73,143,25,12,ES_AUTOHSCROLL | ES_NUMBER
+    DEFPUSHBUTTON   "OK",IDOK,114,162,44,14,WS_GROUP
+    PUSHBUTTON      "Cancelar",IDCANCEL,64,162,44,14,WS_GROUP
+END
+
+IDD_METRONOME_DIALOG DIALOG DISCARDABLE  0, 0, 159, 169
+STYLE WS_MAXIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | 
+    WS_THICKFRAME
+CAPTION "Open Metronome"
+FONT 8, "MS Sans Serif"
+BEGIN
+    CONTROL         "Metrónomo &Plano",IDC_RADIO_PLAIN,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,0,1,78,10
+    CONTROL         "Compás si&mple",IDC_RADIO_MEASURE,"Button",
+                    BS_AUTORADIOBUTTON,0,12,64,10
+    CONTROL         "Personali&zado",IDC_RADIO_GROUP,"Button",
+                    BS_AUTORADIOBUTTON,0,24,57,10
+    EDITTEXT        IDC_BPMEASURE_EDIT,68,11,36,12,ES_AUTOHSCROLL | 
+                    ES_NUMBER | WS_DISABLED
+    CONTROL         "Spin1",IDC_BPMEASURE_SPIN,"msctls_updown32",
+                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
+                    UDS_ARROWKEYS | WS_DISABLED,96,11,7,12
+    EDITTEXT        IDC_GROUP_EDIT,58,24,100,11,ES_AUTOHSCROLL | WS_DISABLED
+    DEFPUSHBUTTON   "E&jecutar",IDC_PLAY_BUTTON,128,1,30,22
+    CONTROL         "&Ver",IDC_BLINK_CHECK,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,78,1,27,10
+    LTEXT           "&1",IDC_TICK_LABEL_1,2,37,8,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_TICK_COMBO_1,10,36,79,85,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Slider1",IDC_TICK_VOLUME_SLIDER1,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,88,38,28,10
+    CONTROL         "Slider1",IDC_BLINK_SIZE_SLIDER1,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,116,38,25,10
+    LTEXT           "&2",IDC_TICK_LABEL_2,2,49,8,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_TICK_COMBO_2,10,48,79,85,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Slider1",IDC_TICK_VOLUME_SLIDER2,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,88,50,28,10
+    CONTROL         "Slider1",IDC_BLINK_SIZE_SLIDER2,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,116,50,25,10
+    LTEXT           "&3",IDC_TICK_LABEL_3,2,61,8,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_TICK_COMBO_3,10,60,79,85,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Slider1",IDC_TICK_VOLUME_SLIDER3,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,88,62,28,10
+    CONTROL         "Slider1",IDC_BLINK_SIZE_SLIDER3,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,116,62,25,10
+    LTEXT           "&4",IDC_TICK_LABEL_4,2,73,8,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_TICK_COMBO_4,10,72,79,85,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Slider1",IDC_TICK_VOLUME_SLIDER4,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,88,74,28,10
+    CONTROL         "Slider1",IDC_BLINK_SIZE_SLIDER4,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,116,74,25,10
+    LTEXT           "&5",IDC_TICK_LABEL_5,2,85,8,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_TICK_COMBO_5,10,84,79,85,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Slider1",IDC_TICK_VOLUME_SLIDER5,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,88,86,28,10
+    CONTROL         "Slider1",IDC_BLINK_SIZE_SLIDER5,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,116,86,25,10
+    LTEXT           "&6",IDC_TICK_LABEL_6,2,97,8,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_TICK_COMBO_6,10,96,79,85,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Slider1",IDC_TICK_VOLUME_SLIDER6,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,88,98,28,10
+    CONTROL         "Slider1",IDC_BLINK_SIZE_SLIDER6,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,116,98,25,10
+    LTEXT           "&7",IDC_TICK_LABEL_7,2,109,8,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_TICK_COMBO_7,10,108,79,85,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Slider1",IDC_TICK_VOLUME_SLIDER7,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,88,110,28,10
+    CONTROL         "Slider1",IDC_BLINK_SIZE_SLIDER7,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,116,110,25,10
+    LTEXT           "&8",IDC_TICK_LABEL_8,2,121,8,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_TICK_COMBO_8,10,120,79,85,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Slider1",IDC_TICK_VOLUME_SLIDER8,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,88,122,28,10
+    CONTROL         "Slider1",IDC_BLINK_SIZE_SLIDER8,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,116,122,25,10
+    LTEXT           "&9",IDC_TICK_LABEL_9,2,133,8,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_TICK_COMBO_9,10,132,79,85,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Slider1",IDC_TICK_VOLUME_SLIDER9,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,88,134,28,10
+    CONTROL         "Slider1",IDC_BLINK_SIZE_SLIDER9,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,116,134,25,10
+    LTEXT           "Temp&o",IDC_TEMPO,2,144,23,8
+    CONTROL         "Slider1",IDC_BPMINUTE_SLIDER,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,24,144,113,10
+    EDITTEXT        IDC_BPMINUTE_EDIT,137,144,20,11,ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    PUSHBUTTON      "&Borrar",IDC_DELETE_PRESET_BUTTON,1,154,21,10
+    PUSHBUTTON      "&Exp",IDC_EXPORT_PRESET_BUTTON,23,154,18,10
+    PUSHBUTTON      "&Grabar",IDC_SAVE_PRESET_BUTTON,41,154,26,10
+    LTEXT           "P&reajuste",IDC_PRESETS,128,155,29,8
+    COMBOBOX        IDC_PRESET_COMBO,68,154,60,85,CBS_DROPDOWN | 
+                    CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "",IDC_BEAT_INDICATOR,"Static",SS_BITMAP,105,2,20,20
+    CONTROL         "",IDC_BLINK_SIZE_1,"Static",SS_BITMAP,143,36,15,13
+    CONTROL         "",IDC_BLINK_SIZE_2,"Static",SS_BITMAP,143,48,15,13
+    CONTROL         "",IDC_BLINK_SIZE_3,"Static",SS_BITMAP,143,60,15,13
+    CONTROL         "",IDC_BLINK_SIZE_4,"Static",SS_BITMAP,143,72,15,13
+    CONTROL         "",IDC_BLINK_SIZE_5,"Static",SS_BITMAP,143,84,15,13
+    CONTROL         "",IDC_BLINK_SIZE_6,"Static",SS_BITMAP,143,96,15,13
+    CONTROL         "",IDC_BLINK_SIZE_7,"Static",SS_BITMAP,143,108,15,13
+    CONTROL         "",IDC_BLINK_SIZE_8,"Static",SS_BITMAP,143,120,15,13
+    CONTROL         "",IDC_BLINK_SIZE_9,"Static",SS_BITMAP,143,132,15,13
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 152
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 106
+    END
+
+    IDD_HOTKEY_MAP, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 152
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 170
+    END
+
+    IDD_METRONOME_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 152
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 162
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MENUBAR MENU DISCARDABLE 
+BEGIN
+    MENUITEM "Teclas / Parám",              ID_SETTINGS_HOTKEYS
+    MENUITEM "Acerca de",                   IDM_ABOUTBOX
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ABOUTBOX            "&Acerca de Open Metronome..."
+    IDS_TIP_StartString     "Iniciar metrónomo (Enter)"
+    IDS_TIP_StopString      "Detener Metrónomo (Enter)"
+    IDS_TIP_RADIO_PLAIN     "Pulso básico usando la voz #1"
+    IDS_TIP_RADIO_MEASURE   "Enfasis del primer pulso del compás usando la voz #2"
+    IDS_TIP_RADIO_GROUP     "Usar un compás personalizado"
+    IDS_TIP_GROUP_EDIT      "Para cada beat, ingrese 0 para silecio o un número del 1 al 9 para una de las voces de abajo; agrupando varias voces entre paréntesis, provoca que suenen simultaneamente; ej: 11(345)1 provoca que las voces 3,4 y 5 suenen al tiempo en el tercer pulso."
+    IDS_TIP_BPMEASURE_EDIT  "Número de pulsos por compás"
+    IDS_TIP_BPMINUTE_SLIDER "Cambie la velocidad del metrónomo"
+    IDS_TIP_BPMINUTE_EDIT   "Asigne la velocidad del metrónomo"
+    IDS_TIP_BLINK_CHECK     "Alterne la visualización del pulso"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_TIP_VolumeSlider    "Asigne el volumen de esta voz"
+    IDS_TIP_BlinkerSlider   "Asigne el tamaño del parpadeo de esta voz"
+    IDS_TIP_BlinkerSliderD  "Tamaño del parpadeo de esta voz"
+    IDS_TIP_SoundCombo      "Elija un instrumento para esta voz"
+    IDS_TIP_SAVE_PRESET_BUTTON "Guarde los parámetros como preajuste"
+    IDS_TIP_DELETE_PRESET_BUTTON "Borre el preajuste actual"
+    IDS_TIP_PRESET_COMBO    "Elija un preajuste desde la lista o escriba un nombre para grabar uno nuevo"
+    IDS_TIP_EXPORT_PRESET_BUTTON 
+                            "Exporte todas las configuraciones grabadas a un archivo que usted pueda compartir con otros usuarios"
+    IDS_REDUCE_VOICE_VOL    ">Reduzca el volumen!"
+    IDS_MISMATCHED_BRACKETS "Verifique que no hay errores en los paréntesis de su compás personalizado"
+    IDS_MAX_VOICES_PER_BEAT "Solo se permiten hasta 9 instrumentos por pulso"
+    IDS_AT_LEAST_1_BEAT     "Por favor ingrese un compas personalizado"
+    IDS_PLAY                "&Ejecutar"
+    IDS_STOP                "De&tener"
+    IDS_PRESET_OVERWRITE    "Esta seguro de sobreescribir el preajuste actual?"
+    IDS_PRESET_ALREADY_EXISTS "El preajuste ya existe"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_PRESET_SAVE_FAIL    "Hubo un error abriendo la clave de registro. Por favor limite el nombre del preajuste a letras y numeros."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_MIDI_ALPHA_000      "Agogo Agudo"
+    IDS_MIDI_ALPHA_001      "Agogo Grave"
+    IDS_MIDI_ALPHA_002      "Bombo Acústico"
+    IDS_MIDI_ALPHA_003      "Campana de Ride"
+    IDS_MIDI_ALPHA_004      "Bongo Agudo"
+    IDS_MIDI_ALPHA_005      "Bongo Grave"
+    IDS_MIDI_ALPHA_006      "Cabasa"
+    IDS_MIDI_ALPHA_007      "Palmada"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_MIDI_ALPHA_008      "Claves"
+    IDS_MIDI_ALPHA_009      "Cencerro"
+    IDS_MIDI_ALPHA_010      "Cuica Tapada"
+    IDS_MIDI_ALPHA_011      "Cuica Abierta"
+    IDS_MIDI_ALPHA_012      "Bombo 1"
+    IDS_MIDI_ALPHA_013      "Conga Aguda Tapada"
+    IDS_MIDI_ALPHA_014      "Conga Aguda Abierta"
+    IDS_MIDI_ALPHA_015      "Conga Grave"
+    IDS_MIDI_ALPHA_016      "Plato de Corte Chino"
+    IDS_MIDI_ALPHA_017      "Plato de Corte 1"
+    IDS_MIDI_ALPHA_018      "Plato de Corte 2"
+    IDS_MIDI_ALPHA_019      "Plato Ride 1"
+    IDS_MIDI_ALPHA_020      "Plato Ride 2"
+    IDS_MIDI_ALPHA_021      "Plato de Corte Splash"
+    IDS_MIDI_ALPHA_022      "Guiro Corto"
+    IDS_MIDI_ALPHA_023      "Guiro Largo"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_MIDI_ALPHA_024      "Charles Cerrado"
+    IDS_MIDI_ALPHA_025      "Charles Abierto"
+    IDS_MIDI_ALPHA_026      "Pedal de Charles"
+    IDS_MIDI_ALPHA_027      "Maracas"
+    IDS_MIDI_ALPHA_028      "Aro de Caja"
+    IDS_MIDI_ALPHA_029      "Caja Acústica"
+    IDS_MIDI_ALPHA_030      "Caja Eléctrica"
+    IDS_MIDI_ALPHA_031      "Pandereta"
+    IDS_MIDI_ALPHA_032      "Timbal Agudo"
+    IDS_MIDI_ALPHA_033      "Timbal Grave"
+    IDS_MIDI_ALPHA_034      "Timbala de Suelo Grave"
+    IDS_MIDI_ALPHA_035      "Timbala de Suelo Aguda"
+    IDS_MIDI_ALPHA_036      "Timbal Grave"
+    IDS_MIDI_ALPHA_037      "Timbal Grave-Medio"
+    IDS_MIDI_ALPHA_038      "Timbal Agudo-Medio"
+    IDS_MIDI_ALPHA_039      "Timbal Agudo"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_MIDI_ALPHA_040      "Triángulo Tapado"
+    IDS_MIDI_ALPHA_041      "Triángulo Abierto"
+    IDS_MIDI_ALPHA_042      "VibraSlap"
+    IDS_MIDI_ALPHA_043      "Silbido Corto"
+    IDS_MIDI_ALPHA_044      "Silbido Largo"
+    IDS_MIDI_ALPHA_045      "Bloque de Madera Agudo"
+    IDS_MIDI_ALPHA_046      "Bloque de Madera Grave"
+END
+
+#endif    // Spanish (Modern) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
