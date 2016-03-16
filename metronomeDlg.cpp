@@ -53,7 +53,7 @@ static char THIS_FILE[] = __FILE__;
 
 //--------------------------------------------------------------------------------------------------
 // Some functions to convert between the position of the slider and the value of m_BPMinute
-static int round(double const & a) {return (int)(a + 0.5);}
+// static int round(double const & a) {return (int)(a + 0.5);}  // BHB - commented out; use built-int round function
 
 
 //--------------------------------------------------------------------------------------------------
