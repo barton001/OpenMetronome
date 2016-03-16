@@ -24,6 +24,11 @@
 #include "general_midi.h"
 #include "MetronomeDlg_RegPersist.h"
 
+// BHB - Begin: needed for ProcessCmdLine()
+#include "ProcessCmdLine.h"
+// BHB - End: needed for ProcessCmdLine()
+
+
 #ifdef _DEBUG
 #ifdef _AFX
 #define new DEBUG_NEW
@@ -37,8 +42,9 @@ static char THIS_FILE[] = __FILE__;
 //!!!All of the registry keys should be defined here, to prevent the "Load" function accidentally
 //using a different key-name to the save function (e.g., via a typo)
 static TCHAR const s_WeirdMetRegKeyRoot[] = _T("Software\\CodeBiscuit\\Open Metronome");
-long  const CMetronomeDlg_RegPersist::s_DefaultInstruments[MAX_SOUNDS] = 
-                                                {GM1_SIDE_STICK,GM1_BASS_DRUM_1,GM1_LOW_WOOD_BLOCK};
+// BHB - Replace with my instrument selections - was set to {GM1_SIDE_STICK,GM1_BASS_DRUM_1,GM1_LOW_WOOD_BLOCK};
+long  const CMetronomeDlg_RegPersist::s_DefaultInstruments[MAX_SOUNDS] =                                    
+	{ GM1_LOW_WOOD_BLOCK,GM1_HI_WOOD_BLOCK,GM1_CLOSED_HI_HAT,GM1_ACOUSTIC_SNARE,GM1_BASS_DRUM_1,GM1_SPLASH_CYMBAL };
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -129,25 +135,29 @@ bool CMetronomeDlg_RegPersist::SaveSettings(LPCTSTR preset_name)
 
         DWORD dVal = 0;
 
-        dVal = m_MinBPM; RegSetValueEx(hkey, _T("MinBPMinute"), 0, REG_DWORD, (PBYTE)&dVal, sizeof(dVal));
-        dVal = m_MaxBPM; RegSetValueEx(hkey, _T("MaxBPMinute"), 0, REG_DWORD, (PBYTE)&dVal, sizeof(dVal));
-        dVal = m_IncBPM; RegSetValueEx(hkey, _T("IncBPMinute"), 0, REG_DWORD, (PBYTE)&dVal, sizeof(dVal));
-        dVal = m_NumExp; RegSetValueEx(hkey, _T("NumWavLoopsToExport"), 0, REG_DWORD, (PBYTE)&dVal, sizeof(dVal));
+		// BHB - Don't save values from the hotkeys dialog with each preset; I think there should be a single global value set
+		if (preset_name == NULL) {
 
-        unsigned long const HotKeyVKeyTEMPO_UP = m_autopHotKeyDlg->GetHotKeyVKeyTEMPO_UP(); unsigned long const HotKeyFlagTEMPO_UP = m_autopHotKeyDlg->GetHotKeyFlagTEMPO_UP();
-        unsigned long const HotKeyVKeyTEMPO_DN = m_autopHotKeyDlg->GetHotKeyVKeyTEMPO_DN(); unsigned long const HotKeyFlagTEMPO_DN = m_autopHotKeyDlg->GetHotKeyFlagTEMPO_DN();
-        unsigned long const HotKeyVKeyPLAY     = m_autopHotKeyDlg->GetHotKeyVKeyPLAY    (); unsigned long const HotKeyFlagPLAY     = m_autopHotKeyDlg->GetHotKeyFlagPLAY    ();
-        unsigned long const HotKeyVKeySTRAIGHT = m_autopHotKeyDlg->GetHotKeyVKeySTRAIGHT(); unsigned long const HotKeyFlagSTRAIGHT = m_autopHotKeyDlg->GetHotKeyFlagSTRAIGHT();
-        unsigned long const HotKeyVKeySIMPLE   = m_autopHotKeyDlg->GetHotKeyVKeySIMPLE  (); unsigned long const HotKeyFlagSIMPLE   = m_autopHotKeyDlg->GetHotKeyFlagSIMPLE  ();
-        unsigned long const HotKeyVKeyTAP      = m_autopHotKeyDlg->GetHotKeyVKeyTAP     (); unsigned long const HotKeyFlagTAP      = m_autopHotKeyDlg->GetHotKeyFlagTAP     ();
-        
-        RegSetValueEx(hkey, _T("HotKeyVKeyTEMPO_UP"), 0, REG_DWORD, (PBYTE)&HotKeyVKeyTEMPO_UP, sizeof(HotKeyVKeyTEMPO_UP)); RegSetValueEx(hkey, _T("HotKeyFlagTEMPO_UP"), 0, REG_DWORD, (PBYTE)&HotKeyFlagTEMPO_UP, sizeof(HotKeyFlagTEMPO_UP));
-        RegSetValueEx(hkey, _T("HotKeyVKeyTEMPO_DN"), 0, REG_DWORD, (PBYTE)&HotKeyVKeyTEMPO_DN, sizeof(HotKeyVKeyTEMPO_DN)); RegSetValueEx(hkey, _T("HotKeyFlagTEMPO_DN"), 0, REG_DWORD, (PBYTE)&HotKeyFlagTEMPO_DN, sizeof(HotKeyFlagTEMPO_DN));
-        RegSetValueEx(hkey, _T("HotKeyVKeyPLAY"    ), 0, REG_DWORD, (PBYTE)&HotKeyVKeyPLAY    , sizeof(HotKeyVKeyPLAY    )); RegSetValueEx(hkey, _T("HotKeyFlagPLAY"    ), 0, REG_DWORD, (PBYTE)&HotKeyFlagPLAY    , sizeof(HotKeyFlagPLAY    ));
-        RegSetValueEx(hkey, _T("HotKeyVKeySTRAIGHT"), 0, REG_DWORD, (PBYTE)&HotKeyVKeySTRAIGHT, sizeof(HotKeyVKeySTRAIGHT)); RegSetValueEx(hkey, _T("HotKeyFlagSTRAIGHT"), 0, REG_DWORD, (PBYTE)&HotKeyFlagSTRAIGHT, sizeof(HotKeyFlagSTRAIGHT));
-        RegSetValueEx(hkey, _T("HotKeyVKeySIMPLE"  ), 0, REG_DWORD, (PBYTE)&HotKeyVKeySIMPLE  , sizeof(HotKeyVKeySIMPLE  )); RegSetValueEx(hkey, _T("HotKeyFlagSIMPLE"  ), 0, REG_DWORD, (PBYTE)&HotKeyFlagSIMPLE  , sizeof(HotKeyFlagSIMPLE  ));
-        RegSetValueEx(hkey, _T("HotKeyVKeyTAP"     ), 0, REG_DWORD, (PBYTE)&HotKeyVKeyTAP     , sizeof(HotKeyVKeyTAP     )); RegSetValueEx(hkey, _T("HotKeyFlagTAP"     ), 0, REG_DWORD, (PBYTE)&HotKeyFlagTAP     , sizeof(HotKeyFlagTAP     ));
-        
+			dVal = m_MinBPM; RegSetValueEx(hkey, _T("MinBPMinute"), 0, REG_DWORD, (PBYTE)&dVal, sizeof(dVal));
+			dVal = m_MaxBPM; RegSetValueEx(hkey, _T("MaxBPMinute"), 0, REG_DWORD, (PBYTE)&dVal, sizeof(dVal));
+			dVal = m_IncBPM; RegSetValueEx(hkey, _T("IncBPMinute"), 0, REG_DWORD, (PBYTE)&dVal, sizeof(dVal));
+			dVal = m_NumExp; RegSetValueEx(hkey, _T("NumWavLoopsToExport"), 0, REG_DWORD, (PBYTE)&dVal, sizeof(dVal));
+
+			unsigned long const HotKeyVKeyTEMPO_UP = m_autopHotKeyDlg->GetHotKeyVKeyTEMPO_UP(); unsigned long const HotKeyFlagTEMPO_UP = m_autopHotKeyDlg->GetHotKeyFlagTEMPO_UP();
+			unsigned long const HotKeyVKeyTEMPO_DN = m_autopHotKeyDlg->GetHotKeyVKeyTEMPO_DN(); unsigned long const HotKeyFlagTEMPO_DN = m_autopHotKeyDlg->GetHotKeyFlagTEMPO_DN();
+			unsigned long const HotKeyVKeyPLAY = m_autopHotKeyDlg->GetHotKeyVKeyPLAY(); unsigned long const HotKeyFlagPLAY = m_autopHotKeyDlg->GetHotKeyFlagPLAY();
+			unsigned long const HotKeyVKeySTRAIGHT = m_autopHotKeyDlg->GetHotKeyVKeySTRAIGHT(); unsigned long const HotKeyFlagSTRAIGHT = m_autopHotKeyDlg->GetHotKeyFlagSTRAIGHT();
+			unsigned long const HotKeyVKeySIMPLE = m_autopHotKeyDlg->GetHotKeyVKeySIMPLE(); unsigned long const HotKeyFlagSIMPLE = m_autopHotKeyDlg->GetHotKeyFlagSIMPLE();
+			unsigned long const HotKeyVKeyTAP = m_autopHotKeyDlg->GetHotKeyVKeyTAP(); unsigned long const HotKeyFlagTAP = m_autopHotKeyDlg->GetHotKeyFlagTAP();
+
+			RegSetValueEx(hkey, _T("HotKeyVKeyTEMPO_UP"), 0, REG_DWORD, (PBYTE)&HotKeyVKeyTEMPO_UP, sizeof(HotKeyVKeyTEMPO_UP)); RegSetValueEx(hkey, _T("HotKeyFlagTEMPO_UP"), 0, REG_DWORD, (PBYTE)&HotKeyFlagTEMPO_UP, sizeof(HotKeyFlagTEMPO_UP));
+			RegSetValueEx(hkey, _T("HotKeyVKeyTEMPO_DN"), 0, REG_DWORD, (PBYTE)&HotKeyVKeyTEMPO_DN, sizeof(HotKeyVKeyTEMPO_DN)); RegSetValueEx(hkey, _T("HotKeyFlagTEMPO_DN"), 0, REG_DWORD, (PBYTE)&HotKeyFlagTEMPO_DN, sizeof(HotKeyFlagTEMPO_DN));
+			RegSetValueEx(hkey, _T("HotKeyVKeyPLAY"), 0, REG_DWORD, (PBYTE)&HotKeyVKeyPLAY, sizeof(HotKeyVKeyPLAY)); RegSetValueEx(hkey, _T("HotKeyFlagPLAY"), 0, REG_DWORD, (PBYTE)&HotKeyFlagPLAY, sizeof(HotKeyFlagPLAY));
+			RegSetValueEx(hkey, _T("HotKeyVKeySTRAIGHT"), 0, REG_DWORD, (PBYTE)&HotKeyVKeySTRAIGHT, sizeof(HotKeyVKeySTRAIGHT)); RegSetValueEx(hkey, _T("HotKeyFlagSTRAIGHT"), 0, REG_DWORD, (PBYTE)&HotKeyFlagSTRAIGHT, sizeof(HotKeyFlagSTRAIGHT));
+			RegSetValueEx(hkey, _T("HotKeyVKeySIMPLE"), 0, REG_DWORD, (PBYTE)&HotKeyVKeySIMPLE, sizeof(HotKeyVKeySIMPLE)); RegSetValueEx(hkey, _T("HotKeyFlagSIMPLE"), 0, REG_DWORD, (PBYTE)&HotKeyFlagSIMPLE, sizeof(HotKeyFlagSIMPLE));
+			RegSetValueEx(hkey, _T("HotKeyVKeyTAP"), 0, REG_DWORD, (PBYTE)&HotKeyVKeyTAP, sizeof(HotKeyVKeyTAP)); RegSetValueEx(hkey, _T("HotKeyFlagTAP"), 0, REG_DWORD, (PBYTE)&HotKeyFlagTAP, sizeof(HotKeyFlagTAP));
+		}
+
         //Need to re-load the number of beats per measure from the text box back into m_BPMeasure,
         //otherwise we'll write out the number of beats in the custom measure!
         std::basic_string<TCHAR> strBuf = GetWindowText(IDC_BPMEASURE_EDIT);
@@ -176,16 +186,17 @@ bool CMetronomeDlg_RegPersist::SaveSettings(LPCTSTR preset_name)
 
         RegSetValueEx(hkey, _T("Blinking"), 0, REG_DWORD, (PBYTE)&m_blinking, sizeof(m_blinking));
 
-        RECT    window_rect = {0,0,0,0};
-        GetWindowRect(m_hWnd, &window_rect);
+		// BHB - Added the window location settings to this if block. No reason to save with individual presets.
+		if (preset_name == NULL) {
+			RECT    window_rect = {0,0,0,0};
+			GetWindowRect(m_hWnd, &window_rect);
 
-        RegSetValueEx(hkey, _T("WindowTop"),    0, REG_DWORD, (PBYTE)&window_rect.top,    sizeof(LONG));
-        RegSetValueEx(hkey, _T("WindowBottom"), 0, REG_DWORD, (PBYTE)&window_rect.bottom, sizeof(LONG));
-        RegSetValueEx(hkey, _T("WindowLeft"),   0, REG_DWORD, (PBYTE)&window_rect.left,   sizeof(LONG));
-        RegSetValueEx(hkey, _T("WindowRight"),  0, REG_DWORD, (PBYTE)&window_rect.right,  sizeof(LONG));
+			RegSetValueEx(hkey, _T("WindowTop"),    0, REG_DWORD, (PBYTE)&window_rect.top,    sizeof(LONG));
+			RegSetValueEx(hkey, _T("WindowBottom"), 0, REG_DWORD, (PBYTE)&window_rect.bottom, sizeof(LONG));
+			RegSetValueEx(hkey, _T("WindowLeft"),   0, REG_DWORD, (PBYTE)&window_rect.left,   sizeof(LONG));
+			RegSetValueEx(hkey, _T("WindowRight"),  0, REG_DWORD, (PBYTE)&window_rect.right,  sizeof(LONG));
 
-        if(preset_name == NULL)
-        {   // write out the index of the preset that's currently selected
+            // write out the index of the preset that's currently selected
             int preset_num = ::SendMessage(GET_HWND(IDC_PRESET_COMBO), CB_GETCURSEL, 0, 0);
             RegSetValueEx(hkey, _T("Preset"), 0, REG_DWORD, (PBYTE)&preset_num, sizeof(DWORD));
         }
@@ -215,21 +226,25 @@ void CMetronomeDlg_RegPersist::LoadSettings(LPCTSTR preset_name)
         m_BPMinute = 200;
         RegQueryValueEx(hkey, _T("BPMinute"), 0, &dwType, (PBYTE)&m_BPMinute, &dwSize);
 
-        unsigned long HotKeyVKeyTEMPO_UP = 0; unsigned long HotKeyFlagTEMPO_UP = 0;
-        unsigned long HotKeyVKeyTEMPO_DN = 0; unsigned long HotKeyFlagTEMPO_DN = 0;
-        unsigned long HotKeyVKeyPLAY     = 0; unsigned long HotKeyFlagPLAY     = 0;
-        unsigned long HotKeyVKeySTRAIGHT = 0; unsigned long HotKeyFlagSTRAIGHT = 0;
-        unsigned long HotKeyVKeySIMPLE   = 0; unsigned long HotKeyFlagSIMPLE   = 0;
-        unsigned long HotKeyVKeyTAP      = 0; unsigned long HotKeyFlagTAP      = 0;
-        RegQueryValueEx(hkey, _T("HotKeyVKeyTEMPO_UP"), 0, &dwType, (PBYTE)&HotKeyVKeyTEMPO_UP, &dwSize); RegQueryValueEx(hkey, _T("HotKeyFlagTEMPO_UP"), 0, &dwType, (PBYTE)&HotKeyFlagTEMPO_UP, &dwSize); RegisterHotKey(m_hWnd, CHotKeyDlg::e_TEMPO_UP, HotKeyFlagTEMPO_UP, HotKeyVKeyTEMPO_UP); m_autopHotKeyDlg->SetHotKeyTEMPO_UP(HotKeyFlagTEMPO_UP, HotKeyVKeyTEMPO_UP);
-        RegQueryValueEx(hkey, _T("HotKeyVKeyTEMPO_DN"), 0, &dwType, (PBYTE)&HotKeyVKeyTEMPO_DN, &dwSize); RegQueryValueEx(hkey, _T("HotKeyFlagTEMPO_DN"), 0, &dwType, (PBYTE)&HotKeyFlagTEMPO_DN, &dwSize); RegisterHotKey(m_hWnd, CHotKeyDlg::e_TEMPO_DN, HotKeyFlagTEMPO_DN, HotKeyVKeyTEMPO_DN); m_autopHotKeyDlg->SetHotKeyTEMPO_DN(HotKeyFlagTEMPO_DN, HotKeyVKeyTEMPO_DN);
-        RegQueryValueEx(hkey, _T("HotKeyVKeyPLAY"    ), 0, &dwType, (PBYTE)&HotKeyVKeyPLAY    , &dwSize); RegQueryValueEx(hkey, _T("HotKeyFlagPLAY"    ), 0, &dwType, (PBYTE)&HotKeyFlagPLAY    , &dwSize); RegisterHotKey(m_hWnd, CHotKeyDlg::e_PLAY    , HotKeyFlagPLAY    , HotKeyVKeyPLAY    ); m_autopHotKeyDlg->SetHotKeyPLAY    (HotKeyFlagPLAY    , HotKeyVKeyPLAY    );
-        RegQueryValueEx(hkey, _T("HotKeyVKeySTRAIGHT"), 0, &dwType, (PBYTE)&HotKeyVKeySTRAIGHT, &dwSize); RegQueryValueEx(hkey, _T("HotKeyFlagSTRAIGHT"), 0, &dwType, (PBYTE)&HotKeyFlagSTRAIGHT, &dwSize); RegisterHotKey(m_hWnd, CHotKeyDlg::e_STRAIGHT, HotKeyFlagSTRAIGHT, HotKeyVKeySTRAIGHT); m_autopHotKeyDlg->SetHotKeySTRAIGHT(HotKeyFlagSTRAIGHT, HotKeyVKeySTRAIGHT);
-        RegQueryValueEx(hkey, _T("HotKeyVKeySIMPLE"  ), 0, &dwType, (PBYTE)&HotKeyVKeySIMPLE  , &dwSize); RegQueryValueEx(hkey, _T("HotKeyFlagSIMPLE"  ), 0, &dwType, (PBYTE)&HotKeyFlagSIMPLE  , &dwSize); RegisterHotKey(m_hWnd, CHotKeyDlg::e_SIMPLE  , HotKeyFlagSIMPLE  , HotKeyVKeySIMPLE  ); m_autopHotKeyDlg->SetHotKeySIMPLE  (HotKeyFlagSIMPLE  , HotKeyVKeySIMPLE  );
-        RegQueryValueEx(hkey, _T("HotKeyVKeyTAP"     ), 0, &dwType, (PBYTE)&HotKeyVKeyTAP     , &dwSize); RegQueryValueEx(hkey, _T("HotKeyFlagTAP"     ), 0, &dwType, (PBYTE)&HotKeyFlagTAP     , &dwSize); RegisterHotKey(m_hWnd, CHotKeyDlg::e_TAP     , HotKeyFlagTAP     , HotKeyVKeyTAP     ); m_autopHotKeyDlg->SetHotKeyTAP     (HotKeyFlagTAP     , HotKeyVKeyTAP     );
-
+		// BHB - Don't keep separate hotkey settings for each preset; I think hotkeys should be global
+		if (preset_name == NULL) {
+			unsigned long HotKeyVKeyTEMPO_UP = 0; unsigned long HotKeyFlagTEMPO_UP = 0;
+			unsigned long HotKeyVKeyTEMPO_DN = 0; unsigned long HotKeyFlagTEMPO_DN = 0;
+			unsigned long HotKeyVKeyPLAY = 0; unsigned long HotKeyFlagPLAY = 0;
+			unsigned long HotKeyVKeySTRAIGHT = 0; unsigned long HotKeyFlagSTRAIGHT = 0;
+			unsigned long HotKeyVKeySIMPLE = 0; unsigned long HotKeyFlagSIMPLE = 0;
+			unsigned long HotKeyVKeyTAP = 0; unsigned long HotKeyFlagTAP = 0;
+			RegQueryValueEx(hkey, _T("HotKeyVKeyTEMPO_UP"), 0, &dwType, (PBYTE)&HotKeyVKeyTEMPO_UP, &dwSize); RegQueryValueEx(hkey, _T("HotKeyFlagTEMPO_UP"), 0, &dwType, (PBYTE)&HotKeyFlagTEMPO_UP, &dwSize); RegisterHotKey(m_hWnd, CHotKeyDlg::e_TEMPO_UP, HotKeyFlagTEMPO_UP, HotKeyVKeyTEMPO_UP); m_autopHotKeyDlg->SetHotKeyTEMPO_UP(HotKeyFlagTEMPO_UP, HotKeyVKeyTEMPO_UP);
+			RegQueryValueEx(hkey, _T("HotKeyVKeyTEMPO_DN"), 0, &dwType, (PBYTE)&HotKeyVKeyTEMPO_DN, &dwSize); RegQueryValueEx(hkey, _T("HotKeyFlagTEMPO_DN"), 0, &dwType, (PBYTE)&HotKeyFlagTEMPO_DN, &dwSize); RegisterHotKey(m_hWnd, CHotKeyDlg::e_TEMPO_DN, HotKeyFlagTEMPO_DN, HotKeyVKeyTEMPO_DN); m_autopHotKeyDlg->SetHotKeyTEMPO_DN(HotKeyFlagTEMPO_DN, HotKeyVKeyTEMPO_DN);
+			RegQueryValueEx(hkey, _T("HotKeyVKeyPLAY"), 0, &dwType, (PBYTE)&HotKeyVKeyPLAY, &dwSize); RegQueryValueEx(hkey, _T("HotKeyFlagPLAY"), 0, &dwType, (PBYTE)&HotKeyFlagPLAY, &dwSize); RegisterHotKey(m_hWnd, CHotKeyDlg::e_PLAY, HotKeyFlagPLAY, HotKeyVKeyPLAY); m_autopHotKeyDlg->SetHotKeyPLAY(HotKeyFlagPLAY, HotKeyVKeyPLAY);
+			RegQueryValueEx(hkey, _T("HotKeyVKeySTRAIGHT"), 0, &dwType, (PBYTE)&HotKeyVKeySTRAIGHT, &dwSize); RegQueryValueEx(hkey, _T("HotKeyFlagSTRAIGHT"), 0, &dwType, (PBYTE)&HotKeyFlagSTRAIGHT, &dwSize); RegisterHotKey(m_hWnd, CHotKeyDlg::e_STRAIGHT, HotKeyFlagSTRAIGHT, HotKeyVKeySTRAIGHT); m_autopHotKeyDlg->SetHotKeySTRAIGHT(HotKeyFlagSTRAIGHT, HotKeyVKeySTRAIGHT);
+			RegQueryValueEx(hkey, _T("HotKeyVKeySIMPLE"), 0, &dwType, (PBYTE)&HotKeyVKeySIMPLE, &dwSize); RegQueryValueEx(hkey, _T("HotKeyFlagSIMPLE"), 0, &dwType, (PBYTE)&HotKeyFlagSIMPLE, &dwSize); RegisterHotKey(m_hWnd, CHotKeyDlg::e_SIMPLE, HotKeyFlagSIMPLE, HotKeyVKeySIMPLE); m_autopHotKeyDlg->SetHotKeySIMPLE(HotKeyFlagSIMPLE, HotKeyVKeySIMPLE);
+			RegQueryValueEx(hkey, _T("HotKeyVKeyTAP"), 0, &dwType, (PBYTE)&HotKeyVKeyTAP, &dwSize); RegQueryValueEx(hkey, _T("HotKeyFlagTAP"), 0, &dwType, (PBYTE)&HotKeyFlagTAP, &dwSize); RegisterHotKey(m_hWnd, CHotKeyDlg::e_TAP, HotKeyFlagTAP, HotKeyVKeyTAP); m_autopHotKeyDlg->SetHotKeyTAP(HotKeyFlagTAP, HotKeyVKeyTAP);
+		}
         _itot(m_BPMinute, stringbuf, 10);
         ::SetWindowText(GET_HWND(IDC_BPMINUTE_EDIT), stringbuf);
+ 		// BHB: Bugfix - Tempo slider should update whenever BPMinute changes
+		::SendMessage(GET_HWND(IDC_BPMINUTE_SLIDER), TBM_SETPOS, TRUE, BPMToSlider(m_BPMinute)); // BHB
         OnKillfocusBpminuteEdit();
 
         // Load the beats per measure
@@ -280,8 +295,9 @@ void CMetronomeDlg_RegPersist::LoadSettings(LPCTSTR preset_name)
         // Load the custom measure string
         dwType = REG_SZ;
         dwSize = MAX_BPMEASURE + 1;
-        _tcscpy(stringbuf, _T("31212012121"));
-        RegQueryValueEx(hkey, _T("Custom Measure"), 0, &dwType, (PBYTE)stringbuf, &dwSize);
+		// BHB - default to my rock beat example (former value was "31212012121")
+		_tcscpy(stringbuf, _T("[2*](35)0(34)0(35)5(34)0"));
+		RegQueryValueEx(hkey, _T("Custom Measure"), 0, &dwType, (PBYTE)stringbuf, &dwSize);
         ::SetWindowText(*m_autopGroupEdit.get(), stringbuf);
         
         // Load which mode to use (plain, measure, or custom)
@@ -354,6 +370,8 @@ void CMetronomeDlg_RegPersist::LoadSettings(LPCTSTR preset_name)
                 ::EnableWindow(GET_HWND(IDC_DELETE_PRESET_BUTTON), FALSE);
                 ::EnableWindow(GET_HWND(IDC_SAVE_PRESET_BUTTON), TRUE);
             }
+
+			ProcessCmdLine();	// BHB -- Adjust settings based on any command line options
 
             // Save the dimensions/location of the window
             dwType = REG_DWORD;

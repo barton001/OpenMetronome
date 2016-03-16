@@ -38,6 +38,7 @@ public:
                  std::vector<int               > const & aVolumes,        //These are the 9 instrument volumes visible down the screen   ;supplied reference must persist beyond the lifetime of this class's instance
                  std::vector<int               > const & aBeatSizes,      //These are the 9 instrument beat sizes visible down the screen;supplied reference must persist beyond the lifetime of this class's instance
                  unsigned long                   const   BeatsPerMinute,
+				 unsigned long					 const   TempoMultiplier,	// BHB
                  HWND                            const   hWndToSendBlinksAndErrorsTo);
 	
     
@@ -54,6 +55,7 @@ public:
 
 private: //Constants
     unsigned long                           m_BeatsPerMinute ; //Copy of constructor param; set by SetTempo(...)
+	unsigned long							m_TempoMultiplier; // BHB
     std::vector<std::vector<long> > const   m_aInstrumentNums; //Copy of constructor param
     std::vector<int               >         m_aInstruments   ; //Copy of constructor param
     std::vector<int               >         m_aVolumes       ; //Copy of constructor param

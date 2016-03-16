@@ -53,9 +53,14 @@ public:
                  std::vector<int               > const & aVolumes,        //These are the 9 instrument volumes visible down the screen   ;supplied reference must persist beyond the lifetime of this class's instance
                  std::vector<int               > const & aBeatSizes,      //These are the 9 instrument beat sizes visible down the screen;supplied reference must persist beyond the lifetime of this class's instance
                  unsigned long                   const   BeatsPerMinute,
-                 unsigned char                   const   BeatsPerBar,
+				 unsigned long                   const   TempoMultiplier, // BHB
+		/* BHB change next to to unsigned long
+				 unsigned char                   const   BeatsPerBar,
                  unsigned char                   const   nPlayTheFirst_n_BeatsInBarAtAltTempo,
-                 unsigned long                   const   AltBeatsPerMinute,
+				 */
+				 unsigned long                   const   BeatsPerBar,
+				 unsigned long                   const   nPlayTheFirst_n_BeatsInBarAtAltTempo,
+				 unsigned long                   const   AltBeatsPerMinute,
                  HWND                            const   hWndToSendBlinksAndErrorsTo);
 
 
@@ -77,6 +82,7 @@ public:
 
 private: //Constants
     unsigned long                           m_BeatsPerMinute ; //Copy of constructor param; set by SetTempo(...)
+	unsigned long                           m_TempoMultiplier; // BHB - Copy of constructor param
     std::vector<std::vector<long> > const   m_aInstrumentNums; //Copy of constructor param
     std::vector<int               >         m_aInstruments   ; //Copy of constructor param
     std::vector<int               >         m_aVolumes       ; //Copy of constructor param
@@ -122,9 +128,13 @@ private:
     bool m_bClip;
 
 private:
+	/* BHB - change next two to unsigned long 
     unsigned char m_BeatsPerBar;
     unsigned char m_nPlayTheFirst_n_BeatsInBarAtAltTempo;
-    unsigned long m_AltBeatsPerMinute;
+	*/
+	unsigned long m_BeatsPerBar;
+	unsigned long m_nPlayTheFirst_n_BeatsInBarAtAltTempo;
+	unsigned long m_AltBeatsPerMinute;
 };
 
 #endif // !defined(AFX_BeatBox_WAV_H__99EB1287_1D7C_4AE9_B2E0_4A0211302ED6__INCLUDED_)

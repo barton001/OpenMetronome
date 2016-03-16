@@ -47,15 +47,16 @@ CGroupEdit::~CGroupEdit()
 }
 //--------------------------------------------------------------------------------------------------
 
-
+/*  BHB - rewritten to be more efficient below
 long CGroupEdit::OnChar(unsigned long const nChar, long const lKeyData)
 {
 	if((nChar < '0' || nChar > '9') && 
 	   nChar != '(' && 
 	   nChar != ')' && 
-#ifndef USE_WEIRD_MIDI
 	   nChar != '[' && //Advanced syntax
 	   nChar != ']' && //Advanced syntax 
+	   nChar != '*' && // BHB - Advanced syntax
+#ifndef USE_WEIRD_MIDI
 	   nChar != '@' && //Advanced syntax 
 	   nChar != '+' && //Advanced syntax 
 	   nChar != '-' && //Advanced syntax 
@@ -72,6 +73,34 @@ long CGroupEdit::OnChar(unsigned long const nChar, long const lKeyData)
     else
         return CallWindowProc((WNDPROC)m_lOriginalProc, m_hWnd, WM_CHAR, nChar, lKeyData);
 }
+*/
+
+long CGroupEdit::OnChar(unsigned long const nChar, long const lKeyData)
+{
+	if ((nChar >= '0' && nChar <= '9') ||
+		nChar == '(' ||
+		nChar == ')' ||
+		nChar == '[' || //Advanced syntax
+		nChar == ']' || //Advanced syntax 
+		nChar == '*' || // BHB - Advanced syntax
+		nChar == ' ' ||
+		nChar == 0x18 || //Cut
+		nChar == 0x16 || //Paste
+		nChar == 0x03 || //Copy
+		nChar == 0x1a || //Undo
+#ifndef USE_WEIRD_MIDI  // chars allowed in WAV version only
+		nChar == '@' || //Advanced syntax 
+		nChar == '+' || //Advanced syntax 
+		nChar == '-' || //Advanced syntax 
+		nChar == '%' || //Advanced syntax 
+		nChar == ((char)'//') || //Advanced syntax 
+#endif
+		nChar == '\b')    // backspace
+		return CallWindowProc((WNDPROC)m_lOriginalProc, m_hWnd, WM_CHAR, nChar, lKeyData);
+	else
+		return 0;
+}
+
 //--------------------------------------------------------------------------------------------------
 
 
@@ -135,7 +164,7 @@ CGroupEdit::analyse_groups_error CGroupEdit::Parse(std::vector<group_beat> * pBe
             //the instrument array.  Thus, the string _T("123" is mapped to 0,1,2. This way '0'
             //ends up being -1, which will indicate a silent beat.
 
-            if (num_beats >= pBeatData->size())
+            if (num_beats >= ((int)pBeatData->size()))
                 pBeatData->resize(pBeatData->size()*2);
 			(*pBeatData)[num_beats++].set_single_value(stringbuf.c_str()[next_string_index++] - _T('1'));
 			break;
@@ -156,7 +185,7 @@ CGroupEdit::analyse_groups_error CGroupEdit::Parse(std::vector<group_beat> * pBe
 
 			// replace the close paren with 0 to truncate the string
 			stringbuf.begin()[next_string_index + substring_len] = 0;
-            if (num_beats >= pBeatData->size())
+            if (num_beats >= ((int)pBeatData->size()))
                 pBeatData->resize(pBeatData->size()*2);
             (*pBeatData)[num_beats++].set_multiple_value(stringbuf.c_str() + next_string_index);
 
@@ -170,7 +199,7 @@ CGroupEdit::analyse_groups_error CGroupEdit::Parse(std::vector<group_beat> * pBe
 		case gct_invalid:
 		case gct_close_paren:
 
-			// we should never encounter anything other thana numeral, a space, or an open paren in 
+			// we should never encounter anything other than a numeral, a space, or an open paren in 
 			// this loop, so return failure if we do.
 			return ag_misplaced_paren;
 		}

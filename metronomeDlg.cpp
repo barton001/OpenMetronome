@@ -53,7 +53,7 @@ static char THIS_FILE[] = __FILE__;
 
 //--------------------------------------------------------------------------------------------------
 // Some functions to convert between the position of the slider and the value of m_BPMinute
-// static int round(double const & a) {return (int)(a + 0.5);}  // BHB - commented out; use built-int round function
+// static int round(double const & a) {return (int)(a + 0.5);} // BHB - commented out, conflicts with built-in function
 
 
 //--------------------------------------------------------------------------------------------------
@@ -63,10 +63,10 @@ static char THIS_FILE[] = __FILE__;
 // so I need a log offset.  This'll make the difference in precision
 // between the left and right sides of the slider to be less
 static const int s_BPMSliderLogOffset = 128;
-UINT CMetronomeDlg::SliderToBPM(UINT x) {return m_MinBPM + round(pow(2.0,((double)x)/(m_MaxBPM-m_MinBPM)))-s_BPMSliderLogOffset;}
+UINT CMetronomeDlg::SliderToBPM(UINT x) {return (UINT)((m_MinBPM) + round(pow(2.0,((double)x)/(m_MaxBPM-m_MinBPM)))-s_BPMSliderLogOffset);}
 UINT CMetronomeDlg::BPMToSlider(UINT x)
 {                                                        //693.147... == LN_2/1000
-    return round(log((double)((x - m_MinBPM) + s_BPMSliderLogOffset)) / (log(2.0)/(m_MaxBPM-m_MinBPM)));
+    return ((UINT)round(log((double)((x - m_MinBPM) + s_BPMSliderLogOffset)) / (log(2.0)/(m_MaxBPM-m_MinBPM))));
 }
 //--------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------
@@ -92,10 +92,16 @@ CMetronomeDlg::CMetronomeDlg(HINSTANCE hInstance, HWND hParent) :
     m_MetronomeStyle(metPlain),
     m_blinking(0),
     m_hIcon(LoadImage(m_hInstance, MAKEINTRESOURCE(IDR_MAINFRAME), IMAGE_ICON,0,0, LR_DEFAULTSIZE)),
+	/* BHB following 3 members changed from double to unsigned long, also changed to what I consider
+	 * to be more reasonable default values
     m_MinBPM(   0.0),
     m_MaxBPM(1000.0),
     m_IncBPM(  30.0),
-    m_NumExp(    60),
+	*/
+	m_MinBPM(30),
+	m_MaxBPM(300),
+	m_IncBPM(5),
+	m_NumExp(60),
     m_BPMeasure(0),
     m_BPMinute(0)
 {
@@ -263,8 +269,8 @@ long CMetronomeDlg::OnInitDialog()
     // Set the range for the BPMinute slider.  The value in the BPMinute edit box will be 
     //2^(<slider value> / m_MaxBPM).  Thus the edit box's value will range from 4 to m_MaxBPM (assuming 
     //a slider range of 2000 to 9966)
-    ::SendMessage(GET_HWND(IDC_BPMINUTE_SLIDER), TBM_SETRANGEMIN, TRUE, BPMToSlider(m_MinBPM));
-    ::SendMessage(GET_HWND(IDC_BPMINUTE_SLIDER), TBM_SETRANGEMAX, TRUE, BPMToSlider(m_MaxBPM));
+    ::SendMessage(GET_HWND(IDC_BPMINUTE_SLIDER), TBM_SETRANGEMIN, TRUE, BPMToSlider((UINT)m_MinBPM));
+    ::SendMessage(GET_HWND(IDC_BPMINUTE_SLIDER), TBM_SETRANGEMAX, TRUE, BPMToSlider((UINT)m_MaxBPM));
 
     m_autopHotKeyDlg = (std::auto_ptr<CHotKeyDlg>) new CHotKeyDlg(m_hInstance, m_hWnd);
 
@@ -383,7 +389,7 @@ void CMetronomeDlg::OnChangeBPMinuteEdit()
         if(m_BPMinute < 4)
             m_BPMinute = 4;
         else if(m_BPMinute > m_MaxBPM)
-            m_BPMinute = m_MaxBPM;
+            m_BPMinute = (unsigned long)m_MaxBPM;
 
         ::SendMessage(GET_HWND(IDC_BPMINUTE_SLIDER), TBM_SETPOS, TRUE, BPMToSlider(m_BPMinute));
 
@@ -486,8 +492,8 @@ long CMetronomeDlg::OnMenuHotkeys(unsigned long const nIgnore1, long const nIgno
         m_IncBPM = m_autopHotKeyDlg->GetIncBPM();
         m_NumExp = m_autopHotKeyDlg->GetNumExp();
 
-        ::SendMessage(GET_HWND(IDC_BPMINUTE_SLIDER), TBM_SETRANGEMIN, TRUE, BPMToSlider(m_MinBPM));
-        ::SendMessage(GET_HWND(IDC_BPMINUTE_SLIDER), TBM_SETRANGEMAX, TRUE, BPMToSlider(m_MaxBPM));
+        ::SendMessage(GET_HWND(IDC_BPMINUTE_SLIDER), TBM_SETRANGEMIN, TRUE, BPMToSlider((UINT)m_MinBPM));
+        ::SendMessage(GET_HWND(IDC_BPMINUTE_SLIDER), TBM_SETRANGEMAX, TRUE, BPMToSlider((UINT)m_MaxBPM));
 
         BPMPos = BPMToSlider(BPM);
         ::SendMessage(GET_HWND(IDC_BPMINUTE_SLIDER), TBM_SETPOS, TRUE, BPMPos);
@@ -512,15 +518,15 @@ long CMetronomeDlg::OnMenuAbout(unsigned long const nIgnore1, long const nIgnore
 long CMetronomeDlg::OnHotKey(unsigned long const nHotKeyCmdMap, long const fuModifiersLO_uVirtKeyHI) 
 {
     if ((GetFocus() != GET_HWND(IDC_GROUP_EDIT)) && (GetFocus() != m_hComboEditChild))
-    {
+		{
         switch (nHotKeyCmdMap)
         {
         case CHotKeyDlg::e_TEMPO_DN:
             {
                 long BPMPos = ::SendMessage(GET_HWND(IDC_BPMINUTE_SLIDER), TBM_GETPOS, 0, 0);
                 long BPM = SliderToBPM(BPMPos);
-                BPM -= m_IncBPM;
-                if (BPM < m_MinBPM)
+                BPM -= (long)m_IncBPM;
+                if (BPM < (long)m_MinBPM)
                     BPM = m_MinBPM;
                 BPMPos = BPMToSlider(BPM);
                 ::SendMessage(GET_HWND(IDC_BPMINUTE_SLIDER), TBM_SETPOS, TRUE, BPMPos);
@@ -532,7 +538,7 @@ long CMetronomeDlg::OnHotKey(unsigned long const nHotKeyCmdMap, long const fuMod
                 long BPMPos = ::SendMessage(GET_HWND(IDC_BPMINUTE_SLIDER), TBM_GETPOS, 0, 0);
                 long BPM = SliderToBPM(BPMPos);
                 BPM += m_IncBPM;
-                if (BPM > m_MaxBPM)
+                if (BPM > (long)m_MaxBPM)
                     BPM = m_MaxBPM;
                 BPMPos = BPMToSlider(BPM);
                 ::SendMessage(GET_HWND(IDC_BPMINUTE_SLIDER), TBM_SETPOS, TRUE, BPMPos);
@@ -768,7 +774,7 @@ bool CMetronomeDlg::BuildPlayerInstance()
 {
     CGroupEdit::analyse_groups_error ag_error;
     
-    // If we're in group mode, make sure the goup edit box has a valid string
+    // If we're in group mode, make sure the group edit box has a valid string
     std::basic_string<TCHAR> strAdvancedCfg;
     if (::SendMessage(GET_HWND(IDC_RADIO_GROUP), BM_GETCHECK, 0, 0) == BST_CHECKED)
     {
@@ -868,32 +874,116 @@ bool CMetronomeDlg::BuildPlayerInstance()
     m_autopTicker = (std::auto_ptr<IBeatBox>)NULL;
     if (alInstrumentNums.size())
     {
-#ifdef USE_WEIRD_MIDI
-    m_autopTicker = (std::auto_ptr<IBeatBox>) new CBeatBox_MID(
-#else //USE_WEIRD_WAV
 
 
-    unsigned short BeatsPerBar = 0;
+/* BHB  - change to unsigned long
+	unsigned short BeatsPerBar = 0;
     unsigned short nPlayTheFirst_n_BeatsInBarAtAltTempo = 0;
+	*/
+	unsigned long BeatsPerBar = 0;
+	unsigned long nPlayTheFirst_n_BeatsInBarAtAltTempo = 0;
+	unsigned long iTemp, iTemp2;
+	long iTemp3;
     long AltBeatsPerMinute = 0;
+	unsigned long TempoMultiplier = 0;	// BHB
     if (strAdvancedCfg.length() > 2)
     {
+		// BHB - Parse advanced config string inside the square brackets
+		//   examples of legal strings: "[2*]", "[3/4@10%]", "[4*2/4@100]"
+		// Strip out any spaces
+		for (int i = strAdvancedCfg.length(); i >= 0;  i--) {
+			if (strAdvancedCfg[i] == ' ') strAdvancedCfg.erase(strAdvancedCfg.begin() + i);
+		}
         const TCHAR * pTerm = strAdvancedCfg.c_str();
-        nPlayTheFirst_n_BeatsInBarAtAltTempo = _tcstoul(++pTerm, (TCHAR**)&pTerm, 10);
-        BeatsPerBar = _tcstoul(++pTerm, (TCHAR**)&pTerm, 10);
+		iTemp = strtoul(++pTerm, (TCHAR**)&pTerm, 10);  // get next integer
+		if (iTemp) {
+			if (*pTerm == '*') {  // tempo multiplier symbol
+				if (iTemp > 1 && iTemp <= 8) {
+					TempoMultiplier = iTemp;
+				} else {
+					MessageBox(m_hWnd, "Custom string parse error: Tempo multiplier must be between 2 and 8", NULL, MB_ICONEXCLAMATION | MB_OK);
+					return false;
+				}
+				iTemp = strtoul(++pTerm, (TCHAR**)&pTerm, 10);  // get next integer
+			}
+			if (iTemp && *pTerm == '/') { // looks like n/m@x format
+				iTemp2 = _tcstoul(++pTerm, (TCHAR**)&pTerm, 10);  // get 2nd integer
+				if (iTemp2 && *pTerm == '@') {
+					iTemp3 = _tcstol(++pTerm, (TCHAR**)&pTerm, 10);  // 3rd integer is alt tempo
+					if (iTemp3) {
+						nPlayTheFirst_n_BeatsInBarAtAltTempo = iTemp;  // first integer is alt beats
+						BeatsPerBar = iTemp2;							// 2nd integer is beats per bar
+						AltBeatsPerMinute = abs(iTemp3);				// 3rd integer is alt tempo
+						if (*pTerm == '%') {
+							AltBeatsPerMinute = m_BPMinute+(long)(round(iTemp3*(m_BPMinute/100.0)));
+						}
+						else if (*pTerm != ']') {
+							MessageBox(m_hWnd, "Custom string parse error: Integer after the @ sign may only be followed by a % character", NULL, MB_ICONEXCLAMATION | MB_OK);
+							return false;
+						}
+						// Check for invalid values
+						if (BeatsPerBar <= nPlayTheFirst_n_BeatsInBarAtAltTempo) AltBeatsPerMinute = -1;
+					}
+					else {
+						MessageBox(m_hWnd, "Custom string parse error: After the @ you must have another integer", NULL, MB_ICONEXCLAMATION | MB_OK);
+						return false;
+					}
+				}
+				else {
+					MessageBox(m_hWnd, "Custom string parse error: After the / you must have an integer followed by an @ character", NULL, MB_ICONEXCLAMATION | MB_OK);
+					return false;
+				}
+				if (AltBeatsPerMinute < 0) {
+					MessageBox(m_hWnd, "Custom string parse error: Invalid alternate tempo values", NULL, MB_ICONEXCLAMATION | MB_OK);
+					return false;
+				}
+				if (AltBeatsPerMinute < (long)m_MinBPM || AltBeatsPerMinute > (long)m_MaxBPM) {
+					MessageBox(m_hWnd, "Custom string parse error: Alternate tempo is outside min/max tempo range", NULL, MB_ICONEXCLAMATION | MB_OK);
+					return false;
+				}
+			} else if (iTemp) {
+				if (TempoMultiplier) { // got "[n*m" and next char isn't a /
+					MessageBox(m_hWnd, "Custom string parse error: Character following the 2nd integer in square brackets must be a /", NULL, MB_ICONEXCLAMATION | MB_OK);
+				}
+				else {	// got "[m" and next char isn't * or /
+					MessageBox(m_hWnd, "Custom string parse error: String in square brackets must start with an integer followed by either * or /", NULL, MB_ICONEXCLAMATION | MB_OK);
+				}
+				return false;
+			}
+
+		} else {
+			MessageBox(m_hWnd, "Custom string parse error: String within the square brackets must start with an integer", NULL, MB_ICONEXCLAMATION | MB_OK);
+			return false;
+		}
+
+		// BHB - end 
+		
+	    // BHB - Original block of code being replaced by block above
+		/*
+		nPlayTheFirst_n_BeatsInBarAtAltTempo = _tcstoul(++pTerm, (TCHAR**)&pTerm, 10);
+		BeatsPerBar = _tcstoul(++pTerm, (TCHAR**)&pTerm, 10);
         AltBeatsPerMinute = _tcstoul(++pTerm, (TCHAR**)&pTerm, 10);
         if (strAdvancedCfg.find(_T('%')) != std::string::npos)
             AltBeatsPerMinute = m_BPMinute+(AltBeatsPerMinute*(m_BPMinute/100.0));
         AltBeatsPerMinute = abs(AltBeatsPerMinute);
+		*/
+		// BHB - End original block
     }
+	if (TempoMultiplier == 0) TempoMultiplier = 1; // BHB: user didn't set it, so default is one
 
+#ifdef USE_WEIRD_MIDI
+	m_autopTicker = (std::auto_ptr<IBeatBox>) new CBeatBox_MID(
+#else //USE_WEIRD_WAV
     m_autopTicker = (std::auto_ptr<IBeatBox>) new CBeatBox_WAV(
 #endif
         alInstrumentNums, m_midi_instrument, m_midi_volume, m_blink_size, m_BPMinute, 
 #ifndef USE_WEIRD_MIDI
+		TempoMultiplier,	// BHB 
         BeatsPerBar,
         nPlayTheFirst_n_BeatsInBarAtAltTempo,
         AltBeatsPerMinute,
+#else
+		TempoMultiplier,	// BHB
 #endif
         m_hWnd);
     }

@@ -52,6 +52,8 @@ protected: //Member variables
 	};
     
     virtual void InitialiseToolTips(); //Overridden to provide tooltips for "preset" buttons etc
+	
+	virtual void ProcessCmdLine();	// BHB
 
 public:
     // Construction : See base-class

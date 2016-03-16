@@ -54,9 +54,16 @@ protected: //Member variables
     enum METRONOME_STYLES{metPlain, metMeasure, metGroup};
 	METRONOME_STYLES m_MetronomeStyle;
 
+/* BHB change from doubles to unsigned long
     double m_MaxBPM;
     double m_MinBPM;
     double m_IncBPM;
+	*/
+
+	unsigned long m_MaxBPM;
+	unsigned long m_MinBPM;
+	unsigned long m_IncBPM;
+
     unsigned long m_NumExp;
     unsigned long m_BPMeasure;
 	unsigned long m_BPMinute ;
@@ -75,12 +82,12 @@ protected: //Member variables
 
 	HANDLE m_hIcon;
     virtual void InitialiseToolTips();
-
+	bool Play();	// BHB
 
 private:
 	void InitTickSoundLists(); //Initialises the drop-down boxes used to select midi voices
 
-	bool Play();
+	// bool Play();	// BHB - move to protected to allow ProcessCmdLine() to start the metronome
 	void Stop();
 
 

@@ -61,7 +61,7 @@ long CEditboxCatchKeypress::OnKeydown(unsigned long const nVirtKey, long const l
     bool const bCTRL  = ((GetKeyState(VK_CONTROL) & 0xFF00) != 0);
     bool const bSHIFT = ((GetKeyState(VK_SHIFT  ) & 0xFF00) != 0);
 
-    TCHAR const tcBufKey[] = {MapVirtualKey(nVirtKey, 2), 0};
+	TCHAR const tcBufKey[] = {((TCHAR const) MapVirtualKeyA(nVirtKey, 2)), 0 };
 
     if (tcBufKey[0])
     {
@@ -77,7 +77,7 @@ long CEditboxCatchKeypress::OnKeydown(unsigned long const nVirtKey, long const l
 
 void CEditboxCatchKeypress::UpdateWindowText()
 {
-    TCHAR const tcBufKey[] = {MapVirtualKey(m_VKey, 2), 0};
+    TCHAR const tcBufKey[] = {((TCHAR const)MapVirtualKey(m_VKey, 2)), 0};
 
     TCHAR tcBuf[] = _T("SHIFT-CTRL-ALT-C "); //Init to this to get the length right
 

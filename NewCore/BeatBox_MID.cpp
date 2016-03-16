@@ -82,6 +82,7 @@ void CBeatBox_MID::BeatNotificationThread()
                 long const Blnk = m_aBeatSizes[m_aInstrumentNums[m_iSequence][i]];
                 if (!m_bQuitThread)
                     ::PostMessage(m_hWnd, UWM_BeatBox_BEAT_OCCURRED_wpBlinkSize_lpNULL, Blnk, 0);
+				
             }
             //else this is a silent note, so don't play it
         }}
@@ -117,6 +118,7 @@ CBeatBox_MID::CBeatBox_MID(std::vector<std::vector<long> > const & aInstrumentNu
                            std::vector<int> const & aVolumes,
                            std::vector<int> const & aBeatSizes,
                            unsigned long    const   BeatsPerMinute,
+						   unsigned long	const	TempoMultiplier,
                            HWND             const   hWndToSendBlinksAndErrorsTo) : 
     m_hWnd(hWndToSendBlinksAndErrorsTo),
     m_bQuitThread(false), m_hThread(NULL),
@@ -126,6 +128,7 @@ CBeatBox_MID::CBeatBox_MID(std::vector<std::vector<long> > const & aInstrumentNu
     m_aVolumes(aVolumes),
     m_aBeatSizes(aBeatSizes),
     m_BeatsPerMinute(BeatsPerMinute),
+	m_TempoMultiplier(TempoMultiplier),
     m_iSequence(0),
     m_uTimerID(NULL)
 {
@@ -193,7 +196,7 @@ void CBeatBox_MID::SetTempo(unsigned long const BeatsPerMinute)
 {
     Stop();
 
-    m_BeatsPerMinute = BeatsPerMinute;
+    m_BeatsPerMinute = BeatsPerMinute * m_TempoMultiplier;
     double const BPS = (((double)m_BeatsPerMinute)/60.0);
     double const BeatEveryThisMany_ms = 1000.0/BPS;
 

@@ -174,7 +174,9 @@ void CBeatBox_WAV::BeatNotificationThread()
     int LastBeat12341234 = -1;
     while (!m_bQuitThread)
     {
-        double const BPS = (((double)m_BeatsPerMinute)/60.0);
+        double const BPS = (((double)m_BeatsPerMinute
+			* m_TempoMultiplier	// BHB
+			)/60.0);
         double const BeatEveryThisMany_ms = 1000.0/BPS;
 
         myTime.wType = TIME_SAMPLES;
@@ -209,7 +211,7 @@ void CBeatBox_WAV::BeatNotificationThread()
         SystemIdleTimerReset(); //Bodge to always-on while ticking. Better way of doing this in CE3?
 #endif
 
-        ErrorCheck((WAIT_FAILED != WaitForSingleObject(m_hEvtPollPlayback, BeatEveryThisMany_ms/16)),
+        ErrorCheck((WAIT_FAILED != WaitForSingleObject(m_hEvtPollPlayback, (DWORD)BeatEveryThisMany_ms/16)),
             _T("Failed waiting on blink event, Metronome will not blink"), true);
     }
 }
@@ -224,9 +226,14 @@ CBeatBox_WAV::CBeatBox_WAV(std::vector<std::vector<long> > const & aInstrumentNu
                            std::vector<int               > const & aVolumes,       
                            std::vector<int               > const & aBeatSizes,     
                            unsigned long                   const   BeatsPerMinute,
+						   unsigned long				   const   TempoMultiplier,  // BHB
+	/* BHB - change next 2 to unsigned long
                            unsigned char                   const   BeatsPerBar,
                            unsigned char                   const   nPlayTheFirst_n_BeatsInBarAtAltTempo,
-                           unsigned long                   const   AltBeatsPerMinute,
+						   */
+	unsigned long                   const   BeatsPerBar,
+	unsigned long                   const   nPlayTheFirst_n_BeatsInBarAtAltTempo,
+	unsigned long                   const   AltBeatsPerMinute,
                            HWND                            const   hWndToSendBlinksAndErrorsTo) : 
     m_hWnd(hWndToSendBlinksAndErrorsTo),
     m_hwo(NULL), m_bQuitThread(false), m_hThread(NULL), m_SequenceLength(aInstrumentNums.size()),
@@ -241,6 +248,7 @@ CBeatBox_WAV::CBeatBox_WAV(std::vector<std::vector<long> > const & aInstrumentNu
     m_myWavDefault  ((SamplesDirectory().append(s_DefaultWAV)).c_str()),
     m_hEvtPollPlayback(CreateEvent(NULL, FALSE, FALSE, NULL)),
     m_BeatsPerMinute(BeatsPerMinute),
+	m_TempoMultiplier(TempoMultiplier),  // BHB
     m_bClip(false),
     m_SampleToLoopDuration_bytes(0)
 {
@@ -287,8 +295,10 @@ void CBeatBox_WAV::Prep()
     unsigned long const BitsPerSample = m_fmtWAV.wBitsPerSample;
              long const BytesPerSample = BitsPerSample/8; //long, not unsigned long, cos that is what div() expects
 
-    double        const SequenceDuration_s = (60.0 / m_BeatsPerMinute) * SeqLength;
-    m_SampleToLoopDuration_bytes = (SequenceDuration_s * m_myWavDefault.GetWaveFormat()->nAvgBytesPerSec) + 0.5;
+    double        const SequenceDuration_s = (60.0 / m_BeatsPerMinute) * SeqLength
+								/ m_TempoMultiplier	// BHB
+								;
+    m_SampleToLoopDuration_bytes = (unsigned long)(round(SequenceDuration_s * m_myWavDefault.GetWaveFormat()->nAvgBytesPerSec) + 0.5);
     if (m_SampleToLoopDuration_bytes & 0x01)
         m_SampleToLoopDuration_bytes+=1;
 
@@ -402,7 +412,7 @@ bool CBeatBox_WAV::PopulateVoiceWAVBufs()
                         AlphaInstrumentStrings[MidiToAlpha[instrument_num]]:_T("");
                 }
                 else
-                    if (instrument_num-65536 < m_aUserVoices.size())
+                    if (instrument_num-65536 < (long)m_aUserVoices.size())
                         sVoice = m_aUserVoices[instrument_num-65536];
 
                 std::basic_string<TCHAR> const sVoiceFullPathFilename = 
@@ -503,8 +513,10 @@ void CBeatBox_WAV::Create1MinOfSamples() //I might consider threading this, and 
     unsigned long const BitsPerSample = m_fmtWAV.wBitsPerSample;
              long const BytesPerSample = BitsPerSample/8; //long, not unsigned long, cos that is what div() expects
 
-    double        const SequenceDuration_s = (60.0 / m_BeatsPerMinute) * SeqLength;
-    unsigned long       SampleToLoopDuration_bytes = (SequenceDuration_s * m_fmtWAV.nAvgBytesPerSec) + 0.5;
+    double        const SequenceDuration_s = (60.0 / m_BeatsPerMinute) * SeqLength
+							/ m_TempoMultiplier	// BHB
+							;
+    unsigned long       SampleToLoopDuration_bytes = (unsigned long)(round(SequenceDuration_s * m_fmtWAV.nAvgBytesPerSec) + 0.5);
     if (SampleToLoopDuration_bytes & 0x01)
         SampleToLoopDuration_bytes+=1; //!!!:Global: a bit nasty! Also, best to explicitly align to bytes-per-sample, rather than assuming a 16-bit sample!
 
@@ -583,8 +595,8 @@ void CBeatBox_WAV::Create1MinOfSamples() //I might consider threading this, and 
             //{
                 double SecondsIntoSample = ((/*jBeatInTime+*/iBeatInSeq) * 60.0 / m_BeatsPerMinute);
                 unsigned long const iBar = ((m_BeatsPerBar==0)?1:iBeatInSeq/m_BeatsPerBar);
-                unsigned char const BeatWithinTheBar = ((m_BeatsPerBar==0)?iBeatInSeq:iBeatInSeq%m_BeatsPerBar);
-                if (BeatWithinTheBar<m_nPlayTheFirst_n_BeatsInBarAtAltTempo)
+                unsigned long BeatWithinTheBar = ((m_BeatsPerBar==0)?iBeatInSeq:iBeatInSeq%m_BeatsPerBar); // BHB - was unsigned char
+                if (BeatWithinTheBar < m_nPlayTheFirst_n_BeatsInBarAtAltTempo)
                 {
                     if (BeatWithinTheBar > 0)
                     {
@@ -593,6 +605,7 @@ void CBeatBox_WAV::Create1MinOfSamples() //I might consider threading this, and 
                     }
                     //else, 1st beat in the bar is always in the right place!
                 }
+				SecondsIntoSample /= m_TempoMultiplier;	// BHB
 
                 long iSample = (unsigned long)((((double)(m_fmtWAV.nSamplesPerSec*(BytesPerSample)))* SecondsIntoSample) + 0.5);
 
@@ -620,8 +633,9 @@ void CBeatBox_WAV::Create1MinOfSamples() //I might consider threading this, and 
                 else
                 {   //!!!All a bit inefficient:(
                     m_bClip = true;
-                    float const Scale = ((float)SHRT_MAX-1) / ((double)__max(abs(MultiVoicePeakLo), MultiVoicePeakHi));
-                    for (unsigned long i = 0; (i < strMultiVoiceBuf.size()) && (iSample+i < s_a1MinOfSamples.size()); ++i)
+//                  float const Scale = ((float)SHRT_MAX-1) / ((double)__max(abs(MultiVoicePeakLo), MultiVoicePeakHi));  // BHB
+					float const Scale = ((float)SHRT_MAX - 1) / ((float)__max(abs(MultiVoicePeakLo), MultiVoicePeakHi));
+					for (unsigned long i = 0; (i < strMultiVoiceBuf.size()) && (iSample+i < s_a1MinOfSamples.size()); ++i)
                     {
                         long iIndex = iSample+i;
                         long const WrapThreshold = (m_SampleToLoopDuration_bytes>>1);
