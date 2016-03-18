@@ -56,7 +56,9 @@ void CBeatBox_MID::BeatNotificationThread()
 
     while (!m_bQuitThread)
     {
-        {for (unsigned long i = 0; i < m_aInstrumentNums[m_iSequence].size(); ++i)
+		long maxBlnk = 0;
+		// Loop through all the voices that play on this beat
+        for (unsigned long i = 0; i < m_aInstrumentNums[m_iSequence].size(); ++i)
         {
             long const index      = m_aInstrumentNums[m_iSequence][i];
             if(index >= 0)
@@ -79,14 +81,16 @@ void CBeatBox_MID::BeatNotificationThread()
                     }
                 }
 
-                long const Blnk = m_aBeatSizes[m_aInstrumentNums[m_iSequence][i]];
-                if (!m_bQuitThread)
-                    ::PostMessage(m_hWnd, UWM_BeatBox_BEAT_OCCURRED_wpBlinkSize_lpNULL, Blnk, 0);
-				
+                long const Blnk = m_aBeatSizes[m_aInstrumentNums[m_iSequence][i]]; // get voice's blink size
+				if (Blnk > maxBlnk) maxBlnk = Blnk;  // get largest blink for all simultaneous voices				
             }
             //else this is a silent note, so don't play it
-        }}
-        ++m_iSequence;
+        }
+		// Trigger the blinker
+		if (!m_bQuitThread && maxBlnk)
+			::PostMessage(m_hWnd, UWM_BeatBox_BEAT_OCCURRED_wpBlinkSize_lpNULL, maxBlnk, 0);
+
+		++m_iSequence;
         m_iSequence = (m_iSequence)%(m_aInstrumentNums.size());
 
         if (!m_bQuitThread)
