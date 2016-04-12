@@ -56,6 +56,7 @@ void CBeatBox_MID::BeatNotificationThread()
 
     while (!m_bQuitThread)
     {
+
 		long maxBlnk = 0;
 		// Loop through all the voices that play on this beat
         for (unsigned long i = 0; i < m_aInstrumentNums[m_iSequence].size(); ++i)
@@ -95,6 +96,16 @@ void CBeatBox_MID::BeatNotificationThread()
 
         if (!m_bQuitThread)
         {
+#ifdef _DEBUG
+			// Set timer for next beat
+			double const BPS = (((double)m_BeatsPerMinute * m_TempoMultiplier) / 60.0);
+			double const BeatEveryThisMany_ms = 1000.0 / BPS;
+			m_uTimerID = timeSetEvent(__max(((unsigned long)(BeatEveryThisMany_ms + 0.5)), 1), 1, (LPTIMECALLBACK)m_hEvtPollPlayback,
+				0, TIME_CALLBACK_EVENT_SET | TIME_ONESHOT);
+			ErrorCheck((m_uTimerID != NULL), _T("Unable to set beat timer! Metronome will not beat"), true);
+#endif
+
+			// Wait for beat timer
             if (WAIT_FAILED == WaitForSingleObject(m_hEvtPollPlayback, INFINITE))
             {
                 m_bQuitThread = true;
@@ -102,7 +113,7 @@ void CBeatBox_MID::BeatNotificationThread()
                 PostMessage(m_hWnd, UWM_BeatBox_ERROR_OCCURRED_wpNULL_lpNULL, NULL, NULL);
             }
         }
-    }
+	}
 
     if (hmo)
     {
@@ -181,32 +192,51 @@ void CBeatBox_MID::Play()
         DWORD dwThreadID = 0;
         m_hThread = CreateThread(NULL, NULL, BeatNotificationThread_stub, this, NULL, &dwThreadID);
     }
-
+#ifndef _DEBUG
     SetTempo(m_BeatsPerMinute); //Stops current timer (if any); Starts new timer
+#endif
 }
 //--------------------------------------------------------------------------------------------------
 
 
 void CBeatBox_MID::Stop()
 {
+#ifdef _DEBUG
+	m_bQuitThread = true;  // tells beatbox thread to exit on next beat loop
+	if (m_hThread)
+	{
+		//SetEvent(m_hEvtPollPlayback);
+		WaitForSingleObject(m_hThread, INFINITE);	// wait for thread to complete
+		CloseHandle(m_hThread);
+		m_hThread = 0;
+	}
+#else
     if (m_uTimerID!=NULL)
         timeKillEvent(m_uTimerID);
     m_uTimerID = NULL;
+#endif
 }
 //--------------------------------------------------------------------------------------------------
 
 
 void CBeatBox_MID::SetTempo(unsigned long const BeatsPerMinute)
 {
+	m_BeatsPerMinute = BeatsPerMinute;
+
+#ifdef _DEBUG
+	return;  // tempo automatically modified within beatbox
+#endif
+
     Stop();
 
-    m_BeatsPerMinute = BeatsPerMinute * m_TempoMultiplier;
-    double const BPS = (((double)m_BeatsPerMinute)/60.0);
+	double const BPS = (((double)m_BeatsPerMinute * m_TempoMultiplier)/60.0);
     double const BeatEveryThisMany_ms = 1000.0/BPS;
 
-    m_uTimerID=timeSetEvent(__max(((unsigned long)(BeatEveryThisMany_ms+0.5)),1),1,(LPTIMECALLBACK)m_hEvtPollPlayback,
-        0, TIME_CALLBACK_EVENT_SET | TIME_PERIODIC);
+	// All beats are the same timing, so let Windows automatically generate the timer events
+	m_uTimerID = timeSetEvent(__max(((unsigned long)(BeatEveryThisMany_ms + 0.5)), 1), 1, (LPTIMECALLBACK)m_hEvtPollPlayback,
+		0, TIME_CALLBACK_EVENT_SET | TIME_PERIODIC);
 
     ErrorCheck((m_uTimerID!=NULL), _T("Unable to set beat timer! Metronome will not beat"), true);
+
 }
 //--------------------------------------------------------------------------------------------------
