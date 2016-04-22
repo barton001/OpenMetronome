@@ -47,33 +47,6 @@ CGroupEdit::~CGroupEdit()
 }
 //--------------------------------------------------------------------------------------------------
 
-/*  BHB - rewritten to be more efficient below
-long CGroupEdit::OnChar(unsigned long const nChar, long const lKeyData)
-{
-	if((nChar < '0' || nChar > '9') && 
-	   nChar != '(' && 
-	   nChar != ')' && 
-	   nChar != '[' && //Advanced syntax
-	   nChar != ']' && //Advanced syntax 
-	   nChar != '*' && // BHB - Advanced syntax
-#ifndef USE_WEIRD_MIDI
-	   nChar != '@' && //Advanced syntax 
-	   nChar != '+' && //Advanced syntax 
-	   nChar != '-' && //Advanced syntax 
-	   nChar != '%' && //Advanced syntax 
-	   nChar != ((char)'//')&& //Advanced syntax 
-#endif
-	   nChar != ' ' &&
-	   nChar != 0x18 && //Cut
-	   nChar != 0x16 && //Paste
-	   nChar != 0x03 && //Copy
-	   nChar != 0x1a && //Undo
-	   nChar != '\b')    // backspace
-		return 0;
-    else
-        return CallWindowProc((WNDPROC)m_lOriginalProc, m_hWnd, WM_CHAR, nChar, lKeyData);
-}
-*/
 
 long CGroupEdit::OnChar(unsigned long const nChar, long const lKeyData)
 {
@@ -88,13 +61,11 @@ long CGroupEdit::OnChar(unsigned long const nChar, long const lKeyData)
 		nChar == 0x16 || //Paste
 		nChar == 0x03 || //Copy
 		nChar == 0x1a || //Undo
-#ifndef USE_WEIRD_MIDI  // chars allowed in WAV version only
 		nChar == '@' || //Advanced syntax 
 		nChar == '+' || //Advanced syntax 
 		nChar == '-' || //Advanced syntax 
 		nChar == '%' || //Advanced syntax 
 		nChar == ((char)'//') || //Advanced syntax 
-#endif
 		nChar == '\b')    // backspace
 		return CallWindowProc((WNDPROC)m_lOriginalProc, m_hWnd, WM_CHAR, nChar, lKeyData);
 	else
@@ -144,7 +115,7 @@ CGroupEdit::analyse_groups_error CGroupEdit::Parse(std::vector<group_beat> * pBe
 
     int num_beats = 0, next_string_index = 0, substring_len = 0;
 
-	// clean out all the spaces from the string.
+	// remove all the spaces from the string.
     for (unsigned long i = 0; i < stringbuf.length(); ++i)
     {
         if (stringbuf[i] == _T(' '))
@@ -174,7 +145,7 @@ CGroupEdit::analyse_groups_error CGroupEdit::Parse(std::vector<group_beat> * pBe
 
 			next_string_index++; // the start of the substring
 
-			// find the end of the substring by finding the first non-numberic character
+			// find the end of the substring by finding the first non-numeric character
 			substring_len = _tcsspn(stringbuf.c_str() + next_string_index, _T("0123456789"));
 
 			// if this substring isn't finished with a close paren or it's too long then return error

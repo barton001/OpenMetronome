@@ -167,6 +167,7 @@ DWORD WINAPI CBeatBox_WAV::BeatNotificationThread_stub(LPVOID pvThis)
 void CBeatBox_WAV::BeatNotificationThread()
 {
     double const sampPerSec = m_fmtWAV.nSamplesPerSec;
+	unsigned int beatnum = 0;
 
     MMTIME myTime;
     memset (&myTime, 0, sizeof(myTime));
@@ -200,7 +201,9 @@ void CBeatBox_WAV::BeatNotificationThread()
                             MaxBlinkSize = m_aBeatSizes[m_aInstrumentNums[Beat12341234][i]];
                     }//else silence
                 }
-                ::PostMessage(m_hWnd, UWM_BeatBox_BEAT_OCCURRED_wpBlinkSize_lpNULL, MaxBlinkSize, m_bClip?1:0);
+				if (MaxBlinkSize && (beatnum == 0))
+					::PostMessage(m_hWnd, UWM_BeatBox_BEAT_OCCURRED_wpBlinkSize_lpNULL, MaxBlinkSize, m_bClip?1:0);
+				beatnum = ++beatnum % m_TempoMultiplier;
             }
         }
 
@@ -227,13 +230,9 @@ CBeatBox_WAV::CBeatBox_WAV(std::vector<std::vector<long> > const & aInstrumentNu
                            std::vector<int               > const & aBeatSizes,     
                            unsigned long                   const   BeatsPerMinute,
 						   unsigned long				   const   TempoMultiplier,  // BHB
-	/* BHB - change next 2 to unsigned long
-                           unsigned char                   const   BeatsPerBar,
-                           unsigned char                   const   nPlayTheFirst_n_BeatsInBarAtAltTempo,
-						   */
-	unsigned long                   const   BeatsPerBar,
-	unsigned long                   const   nPlayTheFirst_n_BeatsInBarAtAltTempo,
-	unsigned long                   const   AltBeatsPerMinute,
+						   unsigned long                   const   BeatsPerBar,
+						   unsigned long                   const   nPlayTheFirst_n_BeatsInBarAtAltTempo,
+						   unsigned long                   const   AltBeatsPerMinute,
                            HWND                            const   hWndToSendBlinksAndErrorsTo) : 
     m_hWnd(hWndToSendBlinksAndErrorsTo),
     m_hwo(NULL), m_bQuitThread(false), m_hThread(NULL), m_SequenceLength(aInstrumentNums.size()),

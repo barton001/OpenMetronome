@@ -237,7 +237,7 @@ BEGIN
             VALUE "CompanyName", "code::Biscuit"
             VALUE "FileDescription", "Open Metronome"
             VALUE "FileVersion", "5.7.0.0"
-            VALUE "InternalName", "oMet_WCE"
+            VALUE "InternalName", "OpenMetronome"
             VALUE "LegalCopyright", "Copyright (C) 2004 David Johnston, 2009-2012 Mark Billington, 2016 Brien Barton. Released under the GPL Licence."
             VALUE "OriginalFilename", "oMet_WCE.exe"
             VALUE "ProductName", "Open Metronome"

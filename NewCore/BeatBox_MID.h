@@ -39,6 +39,9 @@ public:
                  std::vector<int               > const & aBeatSizes,      //These are the 9 instrument beat sizes visible down the screen;supplied reference must persist beyond the lifetime of this class's instance
                  unsigned long                   const   BeatsPerMinute,
 				 unsigned long					 const   TempoMultiplier,	// BHB
+				 unsigned long					 const   BeatsPerBar,
+				 unsigned long					 const   nPlayTheFirst_n_BeatsInBarAtAltTempo,
+				 unsigned long					 const   AltBeatsPerMinute,
                  HWND                            const   hWndToSendBlinksAndErrorsTo);
 	
     
@@ -55,7 +58,14 @@ public:
 
 private: //Constants
     unsigned long                           m_BeatsPerMinute ; //Copy of constructor param; set by SetTempo(...)
-	unsigned long							m_TempoMultiplier; // BHB
+	unsigned long							m_TempoMultiplier; // Copy of constructor param
+	unsigned long							m_BeatsPerBar; //Copy of constructor param
+	unsigned long							m_nPlayTheFirst_n_BeatsInBarAtAltTempo; //Copy of constructor param
+	unsigned long							m_AltBeatsPerMinute; //Copy of constructor param
+	double									m_NextBeatDelay_ms;	// Calculated in constructor
+	double									m_NextAltBeatDelay_ms;	// Calculated in constructor
+	double									m_FirstOnBeatDelay_ms;	// Calculated in constructor
+
     std::vector<std::vector<long> > const   m_aInstrumentNums; //Copy of constructor param
     std::vector<int               >         m_aInstruments   ; //Copy of constructor param
     std::vector<int               >         m_aVolumes       ; //Copy of constructor param
@@ -64,7 +74,7 @@ private: //Constants
     
 private: //Stuff for the main beat thread    
     HANDLE m_hThread; //Handle to BeatNotificationThread_stub
-    HANDLE m_hEvtPollPlayback; //Set by High-rest timer to schedule beats
+    HANDLE m_hEvtPollPlayback; //Set by High-res timer to schedule beats
     bool m_bQuitThread; //Signals BeatNotificationThread to quit
     static DWORD WINAPI BeatNotificationThread_stub(LPVOID pvThis); //Just calls BeatNotificationThread; saves me having to do pvThis-> everywhere
     void BeatNotificationThread(); //This is the bit that does the work!

@@ -36,8 +36,13 @@ CAboutDlg::CAboutDlg(HINSTANCE hInstance, HWND hParent) :
     ADD_CMD_HANDLER(IDC_PINKANDAINT_URL, OnPinkandaintUrl  );
     ADD_MSG_HANDLER(WM_CTLCOLORSTATIC  , OnCtlColor        );
 
-    std::basic_string<TCHAR> buf(WMET_APP_TITLE _T("              "));
-    cBscFileVersion::Get((TCHAR*)(buf.c_str()+_tcslen(WMET_APP_TITLE)));
+    std::basic_string<TCHAR> buf(WMET_APP_TITLE);
+#ifdef USE_WEIRD_MIDI
+	buf.append("MIDI ");
+#else
+	buf.append("WAV  ");
+#endif
+	cBscFileVersion::Get((TCHAR*)(buf.c_str()+_tcslen(WMET_APP_TITLE)+5));
     m_program_title = buf.c_str();
 }
 //--------------------------------------------------------------------------------------------------

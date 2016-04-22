@@ -747,12 +747,7 @@ void CMetronomeDlg::InitialiseToolTips()
     m_autopTTRADIO_PLAIN     = (std::auto_ptr<CBscToolTip>) new CBscToolTip(IDC_RADIO_PLAIN    , m_hWnd, m_hInstance, IDS_TIP_RADIO_PLAIN    );
     m_autopTTRADIO_MEASURE   = (std::auto_ptr<CBscToolTip>) new CBscToolTip(IDC_RADIO_MEASURE  , m_hWnd, m_hInstance, IDS_TIP_RADIO_MEASURE  );
     m_autopTTRADIO_GROUP     = (std::auto_ptr<CBscToolTip>) new CBscToolTip(IDC_RADIO_GROUP    , m_hWnd, m_hInstance, IDS_TIP_RADIO_GROUP    );
-    m_autopTTGROUP_EDIT      = (std::auto_ptr<CBscToolTip>) new CBscToolTip(IDC_GROUP_EDIT     , m_hWnd, m_hInstance, 
-#ifdef USE_WEIRD_MIDI
-        IDS_TIP_GROUP_EDIT        );
-#else
-        IDS_TIP_GROUP_EDIT_EXT_WAV);
-#endif
+    m_autopTTGROUP_EDIT      = (std::auto_ptr<CBscToolTip>) new CBscToolTip(IDC_GROUP_EDIT     , m_hWnd, m_hInstance, IDS_TIP_GROUP_EDIT_EXT_WAV);
     m_autopTTBPMEASURE_EDIT  = (std::auto_ptr<CBscToolTip>) new CBscToolTip(IDC_BPMEASURE_EDIT , m_hWnd, m_hInstance, IDS_TIP_BPMEASURE_EDIT );
     m_autopTTPLAY_BUTTON     = (std::auto_ptr<CBscToolTip>) new CBscToolTip(IDC_PLAY_BUTTON    , m_hWnd, m_hInstance, IDS_TIP_StartString);
     m_autopTTBPMINUTE_SLIDER = (std::auto_ptr<CBscToolTip>) new CBscToolTip(IDC_BPMINUTE_SLIDER, m_hWnd, m_hInstance, IDS_TIP_BPMINUTE_SLIDER);
@@ -874,18 +869,11 @@ bool CMetronomeDlg::BuildPlayerInstance()
     m_autopTicker = (std::auto_ptr<IBeatBox>)NULL;
     if (alInstrumentNums.size())
     {
-
-
-/* BHB  - change to unsigned long
-	unsigned short BeatsPerBar = 0;
-    unsigned short nPlayTheFirst_n_BeatsInBarAtAltTempo = 0;
-	*/
 	unsigned long BeatsPerBar = 0;
 	unsigned long nPlayTheFirst_n_BeatsInBarAtAltTempo = 0;
-	unsigned long iTemp, iTemp2;
-	long iTemp3;
+	long iTemp, iTemp2, iTemp3;
     long AltBeatsPerMinute = 0;
-	unsigned long TempoMultiplier = 0;	// BHB
+	unsigned long TempoMultiplier = 1;	// BHB
     if (strAdvancedCfg.length() > 2)
     {
 		// BHB - Parse advanced config string inside the square brackets
@@ -895,8 +883,8 @@ bool CMetronomeDlg::BuildPlayerInstance()
 			if (strAdvancedCfg[i] == ' ') strAdvancedCfg.erase(strAdvancedCfg.begin() + i);
 		}
         const TCHAR * pTerm = strAdvancedCfg.c_str();
-		iTemp = strtoul(++pTerm, (TCHAR**)&pTerm, 10);  // get next integer
-		if (iTemp) {
+		iTemp = strtol(++pTerm, (TCHAR**)&pTerm, 10);  // get next integer
+		if (iTemp > 1) {
 			if (*pTerm == '*') {  // tempo multiplier symbol
 				if (iTemp > 1 && iTemp <= 8) {
 					TempoMultiplier = iTemp;
@@ -904,16 +892,16 @@ bool CMetronomeDlg::BuildPlayerInstance()
 					MessageBox(m_hWnd, "Custom string parse error: Tempo multiplier must be between 2 and 8", NULL, MB_ICONEXCLAMATION | MB_OK);
 					return false;
 				}
-				iTemp = strtoul(++pTerm, (TCHAR**)&pTerm, 10);  // get next integer
+				iTemp = strtol(++pTerm, (TCHAR**)&pTerm, 10);  // get next integer
 			}
 			if (iTemp && *pTerm == '/') { // looks like n/m@x format
-				iTemp2 = _tcstoul(++pTerm, (TCHAR**)&pTerm, 10);  // get 2nd integer
+				iTemp2 = strtol(++pTerm, (TCHAR**)&pTerm, 10);  // get 2nd integer
 				if (iTemp2 && *pTerm == '@') {
-					iTemp3 = _tcstol(++pTerm, (TCHAR**)&pTerm, 10);  // 3rd integer is alt tempo
+					iTemp3 = strtol(++pTerm, (TCHAR**)&pTerm, 10);  // 3rd integer is alt tempo
 					if (iTemp3) {
 						nPlayTheFirst_n_BeatsInBarAtAltTempo = iTemp;  // first integer is alt beats
 						BeatsPerBar = iTemp2;							// 2nd integer is beats per bar
-						AltBeatsPerMinute = abs(iTemp3);				// 3rd integer is alt tempo
+						AltBeatsPerMinute = iTemp3;					// 3rd integer is alt tempo
 						if (*pTerm == '%') {
 							AltBeatsPerMinute = m_BPMinute+(long)(round(iTemp3*(m_BPMinute/100.0)));
 						}
@@ -921,11 +909,9 @@ bool CMetronomeDlg::BuildPlayerInstance()
 							MessageBox(m_hWnd, "Custom string parse error: Integer after the @ sign may only be followed by a % character", NULL, MB_ICONEXCLAMATION | MB_OK);
 							return false;
 						}
-						// Check for invalid values
-						if (BeatsPerBar <= nPlayTheFirst_n_BeatsInBarAtAltTempo) AltBeatsPerMinute = -1;
 					}
 					else {
-						MessageBox(m_hWnd, "Custom string parse error: After the @ you must have another integer", NULL, MB_ICONEXCLAMATION | MB_OK);
+						MessageBox(m_hWnd, "Custom string parse error: After the @ you must have a non-zero integer", NULL, MB_ICONEXCLAMATION | MB_OK);
 						return false;
 					}
 				}
@@ -933,8 +919,9 @@ bool CMetronomeDlg::BuildPlayerInstance()
 					MessageBox(m_hWnd, "Custom string parse error: After the / you must have an integer followed by an @ character", NULL, MB_ICONEXCLAMATION | MB_OK);
 					return false;
 				}
-				if (AltBeatsPerMinute < 0) {
-					MessageBox(m_hWnd, "Custom string parse error: Invalid alternate tempo values", NULL, MB_ICONEXCLAMATION | MB_OK);
+				// Check that the values are legit
+				if (BeatsPerBar <= nPlayTheFirst_n_BeatsInBarAtAltTempo) {
+					MessageBox(m_hWnd, "Custom string parse error: Integer before the / must be smaller than the one after it", NULL, MB_ICONEXCLAMATION | MB_OK);
 					return false;
 				}
 				if (AltBeatsPerMinute < (long)m_MinBPM || AltBeatsPerMinute > (long)m_MaxBPM) {
@@ -952,24 +939,10 @@ bool CMetronomeDlg::BuildPlayerInstance()
 			}
 
 		} else {
-			MessageBox(m_hWnd, "Custom string parse error: String within the square brackets must start with an integer", NULL, MB_ICONEXCLAMATION | MB_OK);
+			MessageBox(m_hWnd, "Custom string parse error: String within the square brackets must start with an integer greater than 1", NULL, MB_ICONEXCLAMATION | MB_OK);
 			return false;
 		}
-
-		// BHB - end 
-		
-	    // BHB - Original block of code being replaced by block above
-		/*
-		nPlayTheFirst_n_BeatsInBarAtAltTempo = _tcstoul(++pTerm, (TCHAR**)&pTerm, 10);
-		BeatsPerBar = _tcstoul(++pTerm, (TCHAR**)&pTerm, 10);
-        AltBeatsPerMinute = _tcstoul(++pTerm, (TCHAR**)&pTerm, 10);
-        if (strAdvancedCfg.find(_T('%')) != std::string::npos)
-            AltBeatsPerMinute = m_BPMinute+(AltBeatsPerMinute*(m_BPMinute/100.0));
-        AltBeatsPerMinute = abs(AltBeatsPerMinute);
-		*/
-		// BHB - End original block
     }
-	if (TempoMultiplier == 0) TempoMultiplier = 1; // BHB: user didn't set it, so default is one
 
 #ifdef USE_WEIRD_MIDI
 	m_autopTicker = (std::auto_ptr<IBeatBox>) new CBeatBox_MID(
@@ -977,14 +950,10 @@ bool CMetronomeDlg::BuildPlayerInstance()
     m_autopTicker = (std::auto_ptr<IBeatBox>) new CBeatBox_WAV(
 #endif
         alInstrumentNums, m_midi_instrument, m_midi_volume, m_blink_size, m_BPMinute, 
-#ifndef USE_WEIRD_MIDI
 		TempoMultiplier,	// BHB 
         BeatsPerBar,
         nPlayTheFirst_n_BeatsInBarAtAltTempo,
         AltBeatsPerMinute,
-#else
-		TempoMultiplier,	// BHB
-#endif
         m_hWnd);
     }
 
