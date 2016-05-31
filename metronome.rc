@@ -217,8 +217,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 5,7,0,0
- PRODUCTVERSION 5,7,0,0
+ FILEVERSION 6,0,0,0
+ PRODUCTVERSION 6,0,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -234,14 +234,14 @@ BEGIN
         BLOCK "040904b0"
         BEGIN
             VALUE "Comments", "With thanks to David Johnston's ""Weird Metronome"": this project incorporates some of the Weird Metronome source"
-            VALUE "CompanyName", "code::Biscuit"
+            VALUE "CompanyName", "BHBSoftware.com"
             VALUE "FileDescription", "Open Metronome"
-            VALUE "FileVersion", "5.7.0.0"
+            VALUE "FileVersion", "6.0.0.0"
             VALUE "InternalName", "OpenMetronome"
             VALUE "LegalCopyright", "Copyright (C) 2004 David Johnston, 2009-2012 Mark Billington, 2016 Brien Barton. Released under the GPL Licence."
-            VALUE "OriginalFilename", "oMet_WCE.exe"
+            VALUE "OriginalFilename", "OpenMetronome.exe"
             VALUE "ProductName", "Open Metronome"
-            VALUE "ProductVersion", "5.7.0.0"
+            VALUE "ProductVersion", "6.0.0.0"
         END
     END
     BLOCK "VarFileInfo"
