@@ -85,22 +85,24 @@ IDR_MAINFRAME           ICON                    "res\\metronome.ico"
 // Dialog
 //
 
-IDD_ABOUTBOX DIALOGEX 0, 0, 171, 171
+IDD_ABOUTBOX DIALOGEX 0, 0, 171, 200
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "About Open Metronome"
 FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
-    ICON            IDR_MAINFRAME,IDC_STATIC,7,6,21,20
+    ICON            IDR_MAINFRAME,IDC_STATIC,7,6,20,20
     LTEXT           "Open Metronome Version 89898",IDC_PROGRAM_TITLE,35,3,112,8,SS_NOPREFIX
     CTEXT           "Copyright (C) 2004 David Johnston,",IDC_STATIC,35,12,123,8
     DEFPUSHBUTTON   "OK",IDOK,65,93,44,14,WS_GROUP
-    LTEXT           "For more details visit http://BHBSoftware.com/OpenMetronome",IDC_BHBSoftwareURL,17,110,140,16,SS_NOTIFY
-    LTEXT           "or check out the original version of OpenMetronome at openmetronome.sourceforge.net",IDC_PINKANDAINT_URL,17,129,139,26,SS_NOTIFY
     LTEXT           "©2012 Mark Billington (code::Biscuit)",IDC_STATIC,34,22,133,8
-    LTEXT           "Released under the Gnu Public Licence (GPLv3)",IDC_STATIC,8,47,154,8
-    CTEXT           "Open Metronome is based upon and incorporates source code from David Johnston's ""Weird Metronme""",IDC_STATIC,9,65,154,25
-    CTEXT           "Spanish Translation by Jairo Dallos",IDC_STATIC,7,56,154,8
     CTEXT           "©2016 Brien Barton (BHBSoftware.com)",IDC_STATIC,28,32,127,8
+    LTEXT           "Released under the Gnu Public Licence (GPLv3)",IDC_STATIC,10,179,154,8
+    CTEXT           "Open Metronome is based upon and incorporates source code from David Johnston's ""Weird Metronme""",IDC_STATIC,10,60,154,25
+    CTEXT           "Spanish Translation by Jairo Dallos",IDC_STATIC,10,47,154,8
+    LTEXT           "For more details, visit:",IDC_STATIC,7,117,77,8
+    LTEXT           "http://BHBSoftware.com/OpenMetronome",IDC_BHBSoftwareURL,15,129,140,9,SS_NOTIFY
+    LTEXT           "Check out the original version at:",IDC_STATIC,7,147,157,17
+    LTEXT           "openmetronome.sourceforge.net",IDC_PINKANDAINT_URL,15,157,139,8,SS_NOTIFY
 END
 
 IDD_METRONOME_DIALOG DIALOGEX 0, 0, 159, 169
@@ -264,7 +266,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 164
         TOPMARGIN, 7
-        BOTTOMMARGIN, 163
+        BOTTOMMARGIN, 192
     END
 
     IDD_METRONOME_DIALOG, DIALOG
@@ -441,7 +443,7 @@ LANGUAGE LANG_SPANISH, SUBLANG_SPANISH_MODERN
 // Dialog
 //
 
-IDD_ABOUTBOX DIALOGEX 0, 0, 159, 133
+IDD_ABOUTBOX DIALOGEX 0, 0, 171, 171
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Acerca de Open Metronome"
 FONT 8, "MS Sans Serif", 0, 0, 0x0
@@ -450,13 +452,15 @@ BEGIN
     LTEXT           "Open Metronome                       ",IDC_PROGRAM_TITLE,34,3,112,8,SS_NOPREFIX
     LTEXT           "Derechos de Autor ©2004 D. Johnston",IDC_STATIC,33,12,125,8
     DEFPUSHBUTTON   "OK",IDOK,58,91,44,14,WS_GROUP
-    LTEXT           "Para actualizaciones y novedades visitar",IDC_STATIC,16,107,129,8
-    CTEXT           "openmetronome.sourceforge.net",IDC_PINKANDAINT_URL,28,117,110,8,SS_NOTIFY
     LTEXT           "©2016 Brien Barton (BHBSoftware.com)",IDC_STATIC,22,32,137,8
     LTEXT           "Publicado bajo la Licencia GNU PUBLIC(GPLv3)",IDC_STATIC,4,45,154,8
-    CTEXT           "Open Metronome esta basado e incorpora codigo escrito por David Johnston's ""Weird Metronome""",IDC_STATIC,4,63,154,25
+    CTEXT           "Open Metronome esta basado e incorpora codigo escrito por David Johnston's ""Weird Metronome""",IDC_STATIC,4,63,152,25
     CTEXT           "Traducción al español por Jairo Dallos",IDC_STATIC,0,54,154,8
     LTEXT           "©2012 Mark Billington (code::Biscuit)",IDC_STATIC,33,22,122,8
+    LTEXT           "Más detalles en:",IDC_STATIC,7,117,77,8
+    LTEXT           "http://BHBSoftware.com/OpenMetronome",IDC_BHBSoftwareURL,15,129,140,9,SS_NOTIFY
+    LTEXT           "Ver la versión original en:",IDC_STATIC,7,147,157,17
+    LTEXT           "openmetronome.sourceforge.net",IDC_PINKANDAINT_URL,15,157,139,8,SS_NOTIFY
 END
 
 IDD_HOTKEY_MAP DIALOG 0, 0, 159, 178
@@ -572,9 +576,9 @@ BEGIN
     IDD_ABOUTBOX, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 152
+        RIGHTMARGIN, 164
         TOPMARGIN, 7
-        BOTTOMMARGIN, 125
+        BOTTOMMARGIN, 163
     END
 
     IDD_HOTKEY_MAP, DIALOG
