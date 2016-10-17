@@ -85,7 +85,7 @@ IDR_MAINFRAME           ICON                    "res\\metronome.ico"
 // Dialog
 //
 
-IDD_ABOUTBOX DIALOGEX 0, 0, 171, 133
+IDD_ABOUTBOX DIALOGEX 0, 0, 171, 171
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "About Open Metronome"
 FONT 8, "MS Sans Serif", 0, 0, 0x0
@@ -94,8 +94,8 @@ BEGIN
     LTEXT           "Open Metronome Version 89898",IDC_PROGRAM_TITLE,35,3,112,8,SS_NOPREFIX
     CTEXT           "Copyright (C) 2004 David Johnston,",IDC_STATIC,35,12,123,8
     DEFPUSHBUTTON   "OK",IDOK,65,93,44,14,WS_GROUP
-    LTEXT           "For updates and news visit",IDC_STATIC,49,109,85,8
-    LTEXT           "openmetronome.sourceforge.net",IDC_PINKANDAINT_URL,35,117,110,8,SS_NOTIFY
+    LTEXT           "For more details visit http://BHBSoftware.com/OpenMetronome",IDC_BHBSoftwareURL,17,110,140,16,SS_NOTIFY
+    LTEXT           "or check out the original version of OpenMetronome at openmetronome.sourceforge.net",IDC_PINKANDAINT_URL,17,129,139,26,SS_NOTIFY
     LTEXT           "©2012 Mark Billington (code::Biscuit)",IDC_STATIC,34,22,133,8
     LTEXT           "Released under the Gnu Public Licence (GPLv3)",IDC_STATIC,8,47,154,8
     CTEXT           "Open Metronome is based upon and incorporates source code from David Johnston's ""Weird Metronme""",IDC_STATIC,9,65,154,25
@@ -264,7 +264,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 164
         TOPMARGIN, 7
-        BOTTOMMARGIN, 125
+        BOTTOMMARGIN, 163
     END
 
     IDD_METRONOME_DIALOG, DIALOG

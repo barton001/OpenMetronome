@@ -41,7 +41,7 @@ static char THIS_FILE[] = __FILE__;
 //--------------------------------------------------------------------------------------------------
 //!!!All of the registry keys should be defined here, to prevent the "Load" function accidentally
 //using a different key-name to the save function (e.g., via a typo)
-static TCHAR const s_WeirdMetRegKeyRoot[] = _T("Software\\CodeBiscuit\\Open Metronome");
+static TCHAR const s_WeirdMetRegKeyRoot[] = _T("Software\\BHBSoftware\\Open Metronome");
 // BHB - Replace with my instrument selections - was set to {GM1_SIDE_STICK,GM1_BASS_DRUM_1,GM1_LOW_WOOD_BLOCK};
 long  const CMetronomeDlg_RegPersist::s_DefaultInstruments[MAX_SOUNDS] =                                    
 	{ GM1_LOW_WOOD_BLOCK,GM1_HI_WOOD_BLOCK,GM1_CLOSED_HI_HAT,GM1_ACOUSTIC_SNARE,GM1_BASS_DRUM_1,GM1_SPLASH_CYMBAL };
@@ -601,7 +601,7 @@ long CMetronomeDlg_RegPersist::OnExportPresetButton(unsigned long const nIgnore1
 {
     OPENFILENAME ofn;
     TCHAR szE[] = _T("/e \"");
-    TCHAR szR[] = _T("\" \"HKEY_CURRENT_USER\\Software\\CodeBiscuit\\Open Metronome\"");
+    TCHAR szR[] = _T("\" \"HKEY_CURRENT_USER\\Software\\BHBSoftware\\Open Metronome\"");
     TCHAR szWholeFile[MAX_PATH + sizeof(szE) + sizeof(szR)] = _T("");       // buffer for file name
     TCHAR szFile[255];       // buffer for file name
     TCHAR title[255];        //buffer for file title

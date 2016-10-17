@@ -1,5 +1,5 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Developer Studio generated include file.
+// Microsoft Visual C++ generated include file.
 // Used by metronome.rc
 //
 #define UDS_SETBUDDYINT                 0x0002
@@ -123,6 +123,7 @@
 #define IDC_EDIT_WAV_EXP                1078
 #define IDC_BUTTON_X_TEMPO_UP           1079
 #define IDC_BUTTON_X_TEMPO_DN           1080
+#define IDC_BHBSoftwareURL              1080
 #define IDC_BUTTON_X_PLAY               1081
 #define IDC_BUTTON_X_STRAIGHT           1082
 #define IDC_BUTTON_X_SIMPLE             1083
@@ -185,7 +186,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        131
 #define _APS_NEXT_COMMAND_VALUE         32773
-#define _APS_NEXT_CONTROL_VALUE         1080
+#define _APS_NEXT_CONTROL_VALUE         1081
 #define _APS_NEXT_SYMED_VALUE           103
 #endif
 #endif

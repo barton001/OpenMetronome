@@ -34,7 +34,8 @@ CAboutDlg::CAboutDlg(HINSTANCE hInstance, HWND hParent) :
     CBscBblDlg(IDD_ABOUTBOX, hInstance, hParent, false, true)
 {
     ADD_CMD_HANDLER(IDC_PINKANDAINT_URL, OnPinkandaintUrl  );
-    ADD_MSG_HANDLER(WM_CTLCOLORSTATIC  , OnCtlColor        );
+	ADD_CMD_HANDLER(IDC_BHBSoftwareURL , OnBHBSoftwareUrl);
+	ADD_MSG_HANDLER(WM_CTLCOLORSTATIC  , OnCtlColor        );
 
     std::basic_string<TCHAR> buf(WMET_APP_TITLE);
 #ifdef USE_WEIRD_MIDI
@@ -70,12 +71,26 @@ long CAboutDlg::OnPinkandaintUrl(unsigned long const nIgnore1, long const nIgnor
 //--------------------------------------------------------------------------------------------------
 
 
+long CAboutDlg::OnBHBSoftwareUrl(unsigned long const nIgnore1, long const nIgnore2)
+{
+	// Learned to do this from http://www.thescarms.com/VBasic/ShellExecute.asp (8/26/2003)
+	// Open the OpenMetronome page at BHBSoftware.com
+
+	//Requires shell32.lib
+#ifndef UNDER_CE //No about box in CE!
+	ShellExecute(this->m_hWnd, _T("open"), _T("http://BHBSoftware.com/openmetronome"), _T(""), 0, SW_SHOWNORMAL);
+#endif
+	return 1;
+}
+//--------------------------------------------------------------------------------------------------
+
 // Here's a function to color the Pinkandaint URL blue so the user  knows that it's clickable.
 long CAboutDlg::OnCtlColor(unsigned long const hdcStatic, long const hwndStatic) 
 {
     long lRet = 0;//Indicate the caller that we're done and it should do default action
 	
-	if (GET_HWND(IDC_PINKANDAINT_URL) == (HWND)hwndStatic)
+	if ((GET_HWND(IDC_PINKANDAINT_URL) == (HWND)hwndStatic) ||
+		(GET_HWND(IDC_BHBSoftwareURL) == (HWND)hwndStatic))
     {
          SetTextColor((HDC)hdcStatic, GetSysColor(COLOR_ACTIVECAPTION));
          SetBkColor((HDC)hdcStatic, GetSysColor(COLOR_BTNFACE));
@@ -84,4 +99,3 @@ long CAboutDlg::OnCtlColor(unsigned long const hdcStatic, long const hwndStatic)
 
     return lRet;
 }
-//--------------------------------------------------------------------------------------------------

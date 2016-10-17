@@ -37,7 +37,8 @@ public:
 
 protected:
     DECLARE_MSG_HANDLER(OnPinkandaintUrl, CAboutDlg); //Launch browser on Pinkandaint URL click
-    DECLARE_MSG_HANDLER(OnCtlColor      , CAboutDlg); //color the Pinkandaint URL blue so the user knows that it's clickable.
+	DECLARE_MSG_HANDLER(OnBHBSoftwareUrl, CAboutDlg); //Launch browser on BHBSoftware URL click
+	DECLARE_MSG_HANDLER(OnCtlColor      , CAboutDlg); //color the Pinkandaint URL blue so the user knows that it's clickable.
     virtual long OnInitDialog();
 
 
