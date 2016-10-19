@@ -747,7 +747,7 @@ void CMetronomeDlg::InitialiseToolTips()
     m_autopTTRADIO_PLAIN     = (std::auto_ptr<CBscToolTip>) new CBscToolTip(IDC_RADIO_PLAIN    , m_hWnd, m_hInstance, IDS_TIP_RADIO_PLAIN    );
     m_autopTTRADIO_MEASURE   = (std::auto_ptr<CBscToolTip>) new CBscToolTip(IDC_RADIO_MEASURE  , m_hWnd, m_hInstance, IDS_TIP_RADIO_MEASURE  );
     m_autopTTRADIO_GROUP     = (std::auto_ptr<CBscToolTip>) new CBscToolTip(IDC_RADIO_GROUP    , m_hWnd, m_hInstance, IDS_TIP_RADIO_GROUP    );
-    m_autopTTGROUP_EDIT      = (std::auto_ptr<CBscToolTip>) new CBscToolTip(IDC_GROUP_EDIT     , m_hWnd, m_hInstance, IDS_TIP_GROUP_EDIT_EXT_WAV);
+    m_autopTTGROUP_EDIT      = (std::auto_ptr<CBscToolTip>) new CBscToolTip(IDC_GROUP_EDIT     , m_hWnd, m_hInstance, IDS_TIP_GROUP_EDIT);
     m_autopTTBPMEASURE_EDIT  = (std::auto_ptr<CBscToolTip>) new CBscToolTip(IDC_BPMEASURE_EDIT , m_hWnd, m_hInstance, IDS_TIP_BPMEASURE_EDIT );
     m_autopTTPLAY_BUTTON     = (std::auto_ptr<CBscToolTip>) new CBscToolTip(IDC_PLAY_BUTTON    , m_hWnd, m_hInstance, IDS_TIP_StartString);
     m_autopTTBPMINUTE_SLIDER = (std::auto_ptr<CBscToolTip>) new CBscToolTip(IDC_BPMINUTE_SLIDER, m_hWnd, m_hInstance, IDS_TIP_BPMINUTE_SLIDER);
@@ -764,6 +764,15 @@ void CMetronomeDlg::InitialiseToolTips()
 }
 //--------------------------------------------------------------------------------------------------
 
+bool CMetronomeDlg::ErrMsgBox(UINT stringTableID)
+// Return a pointer to the string (in the local language) from the string table in the resource file
+// given the ID number of the string we want.  
+{
+	CHAR stringbuf[256];
+	LoadString(m_hInstance, stringTableID, stringbuf, sizeof(stringbuf));
+	MessageBox(m_hWnd, stringbuf, NULL, MB_ICONEXCLAMATION | MB_OK);
+	return false;
+}
 
 bool CMetronomeDlg::BuildPlayerInstance()
 {
@@ -889,8 +898,8 @@ bool CMetronomeDlg::BuildPlayerInstance()
 				if (iTemp > 1 && iTemp <= 8) {
 					TempoMultiplier = iTemp;
 				} else {
-					MessageBox(m_hWnd, "Custom string parse error: Tempo multiplier must be between 2 and 8", NULL, MB_ICONEXCLAMATION | MB_OK);
-					return false;
+					// Tempo multiplier must be between 2 and 8
+					return ErrMsgBox(IDS_BAD_TEMPO_MULT);
 				}
 				iTemp = strtol(++pTerm, (TCHAR**)&pTerm, 10);  // get next integer
 			}
@@ -905,42 +914,40 @@ bool CMetronomeDlg::BuildPlayerInstance()
 						if (*pTerm == '%') {
 							AltBeatsPerMinute = m_BPMinute+(long)(round(iTemp3*(m_BPMinute/100.0)));
 						}
-						else if (*pTerm != ']') {
-							MessageBox(m_hWnd, "Custom string parse error: Integer after the @ sign may only be followed by a % character", NULL, MB_ICONEXCLAMATION | MB_OK);
-							return false;
+						else if (*pTerm != ']') { // Integer after the @ sign may only be followed by a % character
+							return ErrMsgBox(IDS_CUSTOM_STRING_ERR1);
 						}
 					}
 					else {
-						MessageBox(m_hWnd, "Custom string parse error: After the @ you must have a non-zero integer", NULL, MB_ICONEXCLAMATION | MB_OK);
-						return false;
+						// After the @ you must have a non-zero integer
+						return ErrMsgBox(IDS_CUSTOM_STRING_ERR2);
 					}
 				}
 				else {
-					MessageBox(m_hWnd, "Custom string parse error: After the / you must have an integer followed by an @ character", NULL, MB_ICONEXCLAMATION | MB_OK);
-					return false;
+					// After the / you must have an integer followed by an @ character
+					return ErrMsgBox(IDS_CUSTOM_STRING_ERR3);
 				}
 				// Check that the values are legit
 				if (BeatsPerBar <= nPlayTheFirst_n_BeatsInBarAtAltTempo) {
-					MessageBox(m_hWnd, "Custom string parse error: Integer before the / must be smaller than the one after it", NULL, MB_ICONEXCLAMATION | MB_OK);
-					return false;
+					// Integer before the / must be smaller than the one after it
+					return ErrMsgBox(IDS_CUSTOM_STRING_ERR4);
 				}
 				if (AltBeatsPerMinute < (long)m_MinBPM || AltBeatsPerMinute > (long)m_MaxBPM) {
-					MessageBox(m_hWnd, "Custom string parse error: Alternate tempo is outside min/max tempo range", NULL, MB_ICONEXCLAMATION | MB_OK);
-					return false;
+					// Alternate tempo is outside min/max tempo range
+					return ErrMsgBox(IDS_CUSTOM_STRING_ERR5);
 				}
-			} else if (iTemp) {
-				if (TempoMultiplier) { // got "[n*m" and next char isn't a /
-					MessageBox(m_hWnd, "Custom string parse error: Character following the 2nd integer in square brackets must be a /", NULL, MB_ICONEXCLAMATION | MB_OK);
+			} else if (iTemp >= 1) {
+				if (TempoMultiplier > 1) { // got "[n*m" and next char isn't a /
+					return ErrMsgBox(IDS_CUSTOM_STRING_ERR6);
 				}
 				else {	// got "[m" and next char isn't * or /
-					MessageBox(m_hWnd, "Custom string parse error: String in square brackets must start with an integer followed by either * or /", NULL, MB_ICONEXCLAMATION | MB_OK);
+					return ErrMsgBox(IDS_CUSTOM_STRING_ERR7);
 				}
-				return false;
 			}
 
 		} else {
-			MessageBox(m_hWnd, "Custom string parse error: String within the square brackets must start with an integer greater than 1", NULL, MB_ICONEXCLAMATION | MB_OK);
-			return false;
+			// String within the square brackets must start with an integer greater than 1
+			return ErrMsgBox(IDS_CUSTOM_STRING_ERR8);
 		}
     }
 

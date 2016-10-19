@@ -359,9 +359,23 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_PRESET_SAVE_FAIL    "Threre was an error opening the registry key.  Please limit preset names to letters and numbers."
-    IDS_TIP_GROUP_EDIT_EXT_WAV 
-                            "For each beat, enter 0 for silence or a number from 1 to 9 for one of the voices below; putting several voices in brackets causes them all to sound simultaneously, e.g., 11(345)1 will cause voices 3 4 & 5 to sound simultaneously on the 3rd Beat.  You can choose to play the first x beats of every n-beat bar at an alternate tempo, e.g., the first 3 beats of every 4-beat bar at 10% faster by using a prefix of ""[3/4@+10%]"".  Omit the ""%"" symbol to specify an absolute value for alternate beats per minute.  You may put a beat multiplier in square brackets so a prefix of ""[2*]"" would play a sound on each eighth note."
+    IDS_PRESET_SAVE_FAIL    "There was an error opening the registry key.  Please limit preset names to letters and numbers."
+END
+
+///////////////////////////////////////////
+//  BHB: New error message strings
+///////////////////////////////////////////
+STRINGTABLE
+BEGIN
+	IDS_BAD_TEMPO_MULT		"Custom string parse error: Tempo multiplier must be between 2 and 8"
+	IDS_CUSTOM_STRING_ERR1	"Custom string parse error: Integer after the @ sign may only be followed by a % character"
+	IDS_CUSTOM_STRING_ERR2	"Custom string parse error: After the @ you must have a non-zero integer"
+	IDS_CUSTOM_STRING_ERR3	"Custom string parse error: After the / you must have an integer followed by an @ character"
+	IDS_CUSTOM_STRING_ERR4	"Custom string parse error: Integer before the / must be smaller than the one after it"
+	IDS_CUSTOM_STRING_ERR5	"Custom string parse error: Alternate tempo is outside min/max tempo range"
+	IDS_CUSTOM_STRING_ERR6	"Custom string parse error: Character following the 2nd integer in square brackets must be a /"
+	IDS_CUSTOM_STRING_ERR7	"Custom string parse error: String in square brackets must start with an integer followed by either * or /"
+	IDS_CUSTOM_STRING_ERR8	"Custom string parse error: String within the square brackets must start with an integer greater than 1"
 END
 
 STRINGTABLE
@@ -636,7 +650,7 @@ BEGIN
     IDS_TIP_RADIO_PLAIN     "Pulso básico usando la voz #1"
     IDS_TIP_RADIO_MEASURE   "Enfasis del primer pulso del compás usando la voz #2"
     IDS_TIP_RADIO_GROUP     "Usar un compás personalizado"
-    IDS_TIP_GROUP_EDIT      "Para cada beat, ingrese 0 para silecio o un número del 1 al 9 para una de las voces de abajo; agrupando varias voces entre paréntesis, provoca que suenen simultaneamente; ej: 11(345)1 provoca que las voces 3,4 y 5 suenen al tiempo en el tercer pulso."
+    IDS_TIP_GROUP_EDIT      "Para cada beat, ingrese 0 para silecio o un número del 1 al 9 para una de las voces de abajo; agrupando varias voces entre paréntesis, provoca que suenen simultaneamente; ej: 11[345]1 provoca que las voces 3,4 y 5 suenen al tiempo en el tercer pulso."
     IDS_TIP_BPMEASURE_EDIT  "Número de pulsos por compás"
     IDS_TIP_BPMINUTE_SLIDER "Cambie la velocidad del metrónomo"
     IDS_TIP_BPMINUTE_EDIT   "Asigne la velocidad del metrónomo"
@@ -667,6 +681,22 @@ END
 STRINGTABLE
 BEGIN
     IDS_PRESET_SAVE_FAIL    "Hubo un error abriendo la clave de registro. Por favor limite el nombre del preajuste a letras y numeros."
+	END
+
+///////////////////////////////////////////
+//  BHB: New error message strings
+///////////////////////////////////////////
+STRINGTABLE
+BEGIN
+	IDS_BAD_TEMPO_MULT		"Error en personalizado: Multiplicador tempo debe estar entre 2 y 8"
+	IDS_CUSTOM_STRING_ERR1	"Error en personalizado: Número entero después del signo @ sólo puede ser seguido por un carácter %"
+	IDS_CUSTOM_STRING_ERR2	"Error en personalizado: Después de la @ debe tener un número entero distinto de cero"
+	IDS_CUSTOM_STRING_ERR3	"Error en personalizado: Después de que el / debe tener un entero seguido de un carácter @"
+	IDS_CUSTOM_STRING_ERR4	"Error en personalizado: Entero antes de que el / debe ser menor que la que después de que se"
+	IDS_CUSTOM_STRING_ERR5	"Error en personalizado: Tempo alternativo está fuera min / max rango de tempo"
+	IDS_CUSTOM_STRING_ERR6	"Error en personalizado: Carácter que sigue al segundo número entero entre corchetes debe ser un /"
+	IDS_CUSTOM_STRING_ERR7	"Error en personalizado: Cadena entre corchetes debe comenzar con un número entero seguido de * o /"
+	IDS_CUSTOM_STRING_ERR8	"Error en personalizado: Cadena dentro de los corchetes debe comenzar con un número entero mayor que 1"
 END
 
 STRINGTABLE

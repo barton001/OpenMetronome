@@ -42,8 +42,18 @@
 #define IDR_MAINFRAME                   128
 #define IDS_PRESET_SAVE_FAIL            128
 #define IDR_ACCELERATOR_MAIN            129
-#define IDS_TIP_GROUP_EDIT_EXT_WAV      129
 #define IDR_MENUBAR                     130
+// BHB: New error strings
+#define IDS_BAD_TEMPO_MULT				131
+#define IDS_CUSTOM_STRING_ERR1			132
+#define IDS_CUSTOM_STRING_ERR2			133
+#define IDS_CUSTOM_STRING_ERR3			134
+#define IDS_CUSTOM_STRING_ERR4			135
+#define IDS_CUSTOM_STRING_ERR5			136
+#define IDS_CUSTOM_STRING_ERR6			137
+#define IDS_CUSTOM_STRING_ERR7			138
+#define IDS_CUSTOM_STRING_ERR8			139
+// BHB: End new error strings
 #define IDC_BLINK_SIZE_1                1001
 #define IDC_BLINK_SIZE_2                1002
 #define IDC_BLINK_SIZE_3                1003

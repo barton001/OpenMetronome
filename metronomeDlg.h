@@ -90,6 +90,8 @@ private:
 	// bool Play();	// BHB - move to protected to allow ProcessCmdLine() to start the metronome
 	void Stop();
 
+	bool ErrMsgBox(UINT stringTableID);
+
 
 public:
     //Construction: See base-class documentation

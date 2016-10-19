@@ -477,7 +477,7 @@ void CBeatBox_WAV::InitialiseWaveOutDeviceUsingDefaultWAV()
 	m_whdr.dwBufferLength = m_SampleToLoopDuration_bytes;
 
     unsigned long const NumWAVDevices = waveOutGetNumDevs();
-    ErrorCheck((NumWAVDevices>0), _T("No WAV Ouput Device Found! Cannot Play Beats"), true);
+    ErrorCheck((NumWAVDevices>0), _T("No WAV Output Device Found! Cannot Play Beats"), true);
 
     MMRESULT mmres = MMSYSERR_NODRIVER; //Initialise to something other than MMSYSERR_NOERROR
     if (!m_hwo)
