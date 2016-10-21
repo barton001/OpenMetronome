@@ -643,6 +643,10 @@ long CMetronomeDlg::OnBeatOccurred(unsigned long const wpBlinkSize, long const b
             (BeatEveryThisMany_ms+0.5), (CMetBlinker::BLINKER_STATES)wpBlinkSize);
     }
 
+#ifdef WARN_WHEN_CLIPPING
+	// BHB: Don't worry about clipping. Doesn't seem to affect the sound and 
+	//      changing the window title was confusing since only ">Reduce V..." will show.
+
     if (m_bWAVIsClipping != (bWAVIsClipping?true:false))
     {
         m_bWAVIsClipping = bWAVIsClipping?true:false;
@@ -651,7 +655,7 @@ long CMetronomeDlg::OnBeatOccurred(unsigned long const wpBlinkSize, long const b
         else
             SetWindowText(m_hWnd, WMET_APP_TITLE);
     }
-
+#endif
     return 1;
 }
 //--------------------------------------------------------------------------------------------------

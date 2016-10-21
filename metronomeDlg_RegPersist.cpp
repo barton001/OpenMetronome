@@ -44,7 +44,8 @@ static char THIS_FILE[] = __FILE__;
 static TCHAR const s_WeirdMetRegKeyRoot[] = _T("Software\\BHBSoftware\\Open Metronome");
 // BHB - Replace with my instrument selections - was set to {GM1_SIDE_STICK,GM1_BASS_DRUM_1,GM1_LOW_WOOD_BLOCK};
 long  const CMetronomeDlg_RegPersist::s_DefaultInstruments[MAX_SOUNDS] =                                    
-	{ GM1_LOW_WOOD_BLOCK,GM1_HI_WOOD_BLOCK,GM1_CLOSED_HI_HAT,GM1_ACOUSTIC_SNARE,GM1_BASS_DRUM_1,GM1_SPLASH_CYMBAL };
+	{ GM1_LOW_WOOD_BLOCK,GM1_HI_WOOD_BLOCK,GM1_CLOSED_HI_HAT,GM1_ACOUSTIC_SNARE,GM1_BASS_DRUM_1,GM1_SPLASH_CYMBAL,
+	  GM1_LOW_FLOOR_TOM, GM1_LOW_MID_TOM, GM1_HIGH_TOM};
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
