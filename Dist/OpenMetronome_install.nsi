@@ -102,7 +102,7 @@ Section "MIDI Version" MIDI_install ; this is an optional install
 
   File ${BASENAME}MIDI.exe
   CreateDirectory "$SMPROGRAMS\${COMPANYNAME}"
-  CreateShortCut "$SMPROGRAMS\${COMPANYNAME}\${BASENAME}WAV.lnk" $INSTDIR\${BASENAME}WAV.exe
+  CreateShortCut "$SMPROGRAMS\${COMPANYNAME}\${BASENAME}MIDI.lnk" $INSTDIR\${BASENAME}MIDI.exe
 
 SectionEnd
 
