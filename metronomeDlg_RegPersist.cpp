@@ -224,7 +224,7 @@ void CMetronomeDlg_RegPersist::LoadSettings(LPCTSTR preset_name)
         // Load the beats per minute
         dwType = REG_DWORD;
         dwSize = sizeof(m_BPMinute);
-        m_BPMinute = 200;
+        m_BPMinute = 120;
         RegQueryValueEx(hkey, _T("BPMinute"), 0, &dwType, (PBYTE)&m_BPMinute, &dwSize);
 
 		// BHB - Don't keep separate hotkey settings for each preset; I think hotkeys should be global
