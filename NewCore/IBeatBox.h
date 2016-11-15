@@ -59,6 +59,7 @@ public:
     virtual void Play() = 0;
     virtual void Stop() = 0;
     virtual void SetTempo(unsigned long const BeatsPerMinute) = 0;
+	virtual void SetVolume(float MasterVolume) = 0;
 
     virtual void Export(LPCTSTR lpszFilename, unsigned long const NumLoops) {}; //NULL Default instance, a bit cheaty! Not planning to implement this for MIDI!
 

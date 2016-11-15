@@ -200,6 +200,10 @@ bool CMetronomeDlg_RegPersist::SaveSettings(LPCTSTR preset_name)
             // write out the index of the preset that's currently selected
             int preset_num = ::SendMessage(GET_HWND(IDC_PRESET_COMBO), CB_GETCURSEL, 0, 0);
             RegSetValueEx(hkey, _T("Preset"), 0, REG_DWORD, (PBYTE)&preset_num, sizeof(DWORD));
+
+			// write out the master volume value
+			int iMasterVolume = (::SendMessage(GET_HWND(IDC_MASTERVOLUME_SLIDER), TBM_GETPOS, 0, 0));
+			RegSetValueEx(hkey, _T("MasterVolume"), 0, REG_DWORD, (PBYTE)&iMasterVolume, sizeof(DWORD));
         }
 
         // close the registry key now that we're done
@@ -226,6 +230,12 @@ void CMetronomeDlg_RegPersist::LoadSettings(LPCTSTR preset_name)
         dwSize = sizeof(m_BPMinute);
         m_BPMinute = 120;
         RegQueryValueEx(hkey, _T("BPMinute"), 0, &dwType, (PBYTE)&m_BPMinute, &dwSize);
+
+		// Master volume
+		DWORD iMasterVolume = 100;
+		RegQueryValueEx(hkey, _T("MasterVolume"), 0, &dwType, (PBYTE)&iMasterVolume, &dwSize);
+		::SendMessage(GET_HWND(IDC_MASTERVOLUME_SLIDER), TBM_SETPOS, TRUE, iMasterVolume); // BHB
+		m_MasterVolume = iMasterVolume / 100.0f;
 
 		// BHB - Don't keep separate hotkey settings for each preset; I think hotkeys should be global
 		if (preset_name == NULL) {

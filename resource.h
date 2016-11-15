@@ -12,9 +12,7 @@
 #define IDD_ABOUTBOX                    100
 #define IDS_ABOUTBOX                    101
 #define IDD_METRONOME_DIALOG            102
-#define IDS_TIP_StartString             102
 #define IDD_HOTKEY_MAP                  103
-#define IDS_TIP_StopString              103
 #define IDS_TIP_RADIO_PLAIN             104
 #define IDS_TIP_RADIO_MEASURE           105
 #define IDS_TIP_RADIO_GROUP             106
@@ -40,20 +38,22 @@
 #define IDS_PRESET_OVERWRITE            126
 #define IDS_PRESET_ALREADY_EXISTS       127
 #define IDR_MAINFRAME                   128
-#define IDS_PRESET_SAVE_FAIL            128
 #define IDR_ACCELERATOR_MAIN            129
 #define IDR_MENUBAR                     130
-// BHB: New error strings
-#define IDS_BAD_TEMPO_MULT				131
-#define IDS_CUSTOM_STRING_ERR1			132
-#define IDS_CUSTOM_STRING_ERR2			133
-#define IDS_CUSTOM_STRING_ERR3			134
-#define IDS_CUSTOM_STRING_ERR4			135
-#define IDS_CUSTOM_STRING_ERR5			136
-#define IDS_CUSTOM_STRING_ERR6			137
-#define IDS_CUSTOM_STRING_ERR7			138
-#define IDS_CUSTOM_STRING_ERR8			139
-// BHB: End new error strings
+#define IDS_BAD_TEMPO_MULT              131
+#define IDS_CUSTOM_STRING_ERR1          132
+#define IDS_CUSTOM_STRING_ERR2          133
+#define IDS_CUSTOM_STRING_ERR3          134
+#define IDS_CUSTOM_STRING_ERR4          135
+#define IDS_CUSTOM_STRING_ERR5          136
+#define IDS_CUSTOM_STRING_ERR6          137
+#define IDS_CUSTOM_STRING_ERR7          138
+#define IDS_CUSTOM_STRING_ERR8          139
+#define IDS_PRESET_SAVE_FAIL            140
+#define IDS_TIP_StartString             141
+#define IDS_TIP_StopString              142
+
+
 #define IDC_BLINK_SIZE_1                1001
 #define IDC_BLINK_SIZE_2                1002
 #define IDC_BLINK_SIZE_3                1003
@@ -110,13 +110,14 @@
 #define IDC_PROGRAM_TITLE               1054
 #define IDC_BEAT_INDICATOR              1055
 #define IDC_BLINK_CHECK                 1056
-#define IDC_PINKANDAINT_URL             1057
+#define IDC_PRESETS2                    1057
 #define IDC_BPMINUTE_EDIT               1058
 #define IDC_BPMEASURE_EDIT              1059
 #define IDC_BPMEASURE_SPIN              1060
 #define IDC_RADIO_PLAIN                 1061
 #define IDC_RADIO_MEASURE               1062
 #define IDC_RADIO_GROUP                 1063
+#define IDC_PINKANDAINT_URL             1064
 #define IDC_EXPORT_PRESET_BUTTON        1065
 #define IDC_EDIT_HOTKEY_TEMPO_UP        1066
 #define IDC_EDIT_HOTKEY_TEMPO_DN        1067
@@ -133,11 +134,14 @@
 #define IDC_EDIT_WAV_EXP                1078
 #define IDC_BUTTON_X_TEMPO_UP           1079
 #define IDC_BUTTON_X_TEMPO_DN           1080
-#define IDC_BHBSoftwareURL              1080
 #define IDC_BUTTON_X_PLAY               1081
 #define IDC_BUTTON_X_STRAIGHT           1082
 #define IDC_BUTTON_X_SIMPLE             1083
 #define IDC_BUTTON_X_TAP                1084
+#define IDC_MASTERVOLUME_SLIDER         1085
+#define IDC_VOLUME_TEXT                 1086
+#define IDC_BHBSoftwareURL              1087
+
 #define IDS_MIDI_ALPHA_BASE             5000
 #define IDS_MIDI_ALPHA_000              5000
 #define IDS_MIDI_ALPHA_001              5001
@@ -194,9 +198,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        131
+#define _APS_NEXT_RESOURCE_VALUE        143
 #define _APS_NEXT_COMMAND_VALUE         32773
-#define _APS_NEXT_CONTROL_VALUE         1081
+#define _APS_NEXT_CONTROL_VALUE         1088
 #define _APS_NEXT_SYMED_VALUE           103
 #endif
 #endif

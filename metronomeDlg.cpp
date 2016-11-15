@@ -103,7 +103,8 @@ CMetronomeDlg::CMetronomeDlg(HINSTANCE hInstance, HWND hParent) :
 	m_IncBPM(5),
 	m_NumExp(60),
     m_BPMeasure(0),
-    m_BPMinute(0)
+    m_BPMinute(0),
+	m_MasterVolume(1.0f)
 {
     m_BeatData       .resize(MAX_BPMEASURE);
     m_midi_instrument.resize(MAX_SOUNDS, 0);
@@ -191,6 +192,13 @@ long CMetronomeDlg::OnInitDialog()
         m_autopBlinkerSliderDisplay[i] = (std::auto_ptr<CMetBlinker>) new 
             CMetBlinker(0, GET_HWND(IDC_BLINK_SIZE_1 + i ));
     }}
+
+	m_MasterVolumeSlider = GET_HWND(IDC_MASTERVOLUME_SLIDER);
+
+	// Set master volume slider to go from 0 to 100 (percent)
+	::SendMessage(m_MasterVolumeSlider, TBM_SETRANGE, TRUE, MAKELONG(0, 100));
+	// Set slider position to current master volume value
+	::SendMessage(m_MasterVolumeSlider, TBM_SETPOS, TRUE, (UINT)(m_MasterVolume * 100));
 
     {for(unsigned long i = 0; i < MAX_SOUNDS; i++)
     {
@@ -433,6 +441,7 @@ void CMetronomeDlg::OnSelectTickComboGeneric(WPARAM id, LPARAM hWnd)
 long CMetronomeDlg::OnHScroll(unsigned long const nSBCodeAndnPos, long const hwndScrollBar) 
 {
     bool unknown_slider = true;
+	// check for beats per minute slider
     if(((HWND)hwndScrollBar) == GET_HWND(IDC_BPMINUTE_SLIDER))
     {
         TCHAR bob[10];
@@ -441,7 +450,17 @@ long CMetronomeDlg::OnHScroll(unsigned long const nSBCodeAndnPos, long const hwn
         ::SetWindowText(GET_HWND(IDC_BPMINUTE_EDIT), bob);
         unknown_slider = false;
     }
-    else // check for volume sliders
+	// check for master volume slider
+	else if (((HWND)hwndScrollBar) == GET_HWND(IDC_MASTERVOLUME_SLIDER))
+	{
+		m_MasterVolume = (::SendMessage(m_MasterVolumeSlider, TBM_GETPOS, 0, 0)) / 100.0f;
+		if (m_Playing)
+		{
+			if (m_autopTicker.get())
+				m_autopTicker->SetVolume(m_MasterVolume);
+		}
+	}
+    else // check for volume and blinker sliders
     {
         {for(int i = 0; i < MAX_SOUNDS; i++)
         {
@@ -961,7 +980,7 @@ bool CMetronomeDlg::BuildPlayerInstance()
     m_autopTicker = (std::auto_ptr<IBeatBox>) new CBeatBox_WAV(
 #endif
         alInstrumentNums, m_midi_instrument, m_midi_volume, m_blink_size, m_BPMinute, 
-		TempoMultiplier,	// BHB 
+		m_MasterVolume, TempoMultiplier,	// BHB 
         BeatsPerBar,
         nPlayTheFirst_n_BeatsInBarAtAltTempo,
         AltBeatsPerMinute,

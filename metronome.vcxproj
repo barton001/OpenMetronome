@@ -20,6 +20,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{84DF8E49-BB5A-4162-B83F-E436BB8EA354}</ProjectGuid>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <ProjectName>OpenMetronome</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -70,24 +72,28 @@
     <_ProjectFileVersion>14.0.24720.0</_ProjectFileVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='WAV Release|Win32'">
-    <OutDir>.\metronome___Win32_WAV_Release\</OutDir>
-    <IntDir>.\metronome___Win32_WAV_Release\</IntDir>
+    <OutDir>.\Dist\</OutDir>
+    <IntDir>.\WAV_Release\</IntDir>
     <LinkIncremental>false</LinkIncremental>
+    <TargetName>$(ProjectName)WAV</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>.\Release\</OutDir>
+    <OutDir>.\Dist\</OutDir>
     <IntDir>.\Release\</IntDir>
     <LinkIncremental>false</LinkIncremental>
+    <TargetName>$(ProjectName)MIDI</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='WAV Debug|Win32'">
-    <OutDir>.\metronome___Win32_WAV_Debug\</OutDir>
-    <IntDir>.\metronome___Win32_WAV_Debug\</IntDir>
+    <OutDir>.\WAV_Debug\</OutDir>
+    <IntDir>.\WAV_Debug\</IntDir>
     <LinkIncremental>true</LinkIncremental>
+    <TargetName>$(ProjectName)WAV</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>.\Debug\</OutDir>
     <IntDir>.\Debug\</IntDir>
     <LinkIncremental>true</LinkIncremental>
+    <TargetName>$(ProjectName)MIDI</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='WAV Release|Win32'">
     <Midl>
@@ -101,7 +107,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>Support;NewCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;Support;NewCore;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -122,7 +128,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>winmm.lib;version.lib;COMCTL32.LIB;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>../Dist/Weird Metronome_wav.exe</OutputFile>
+      <OutputFile>./Dist/$(ProjectName)WAV.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <ProgramDatabaseFile>.\metronome___Win32_WAV_Release/Weird Metronome.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
@@ -145,7 +151,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>Support;NewCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;Support;NewCore;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;USE_WEIRD_MIDI;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -166,7 +172,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>winmm.lib;version.lib;COMCTL32.LIB;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>../Dist/Weird Metronome.exe</OutputFile>
+      <OutputFile>./Dist/$(ProjectName)MIDI.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <ProgramDatabaseFile>.\Release/Weird Metronome.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
@@ -188,7 +194,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>Support;NewCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;Support;NewCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -210,7 +216,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>winmm.lib;version.lib;COMCTL32.LIB;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>../Dist/d_Weird Metronome_wav.exe</OutputFile>
+      <OutputFile>./WAV_Debug/OpenMetronomeWAV.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>.\metronome___Win32_WAV_Debug/d_Weird Metronome.pdb</ProgramDatabaseFile>
@@ -233,7 +239,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>Support;NewCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;Support;NewCore;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;USE_WEIRD_MIDI;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -255,7 +261,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>winmm.lib;version.lib;COMCTL32.LIB;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>../Dist/d_Weird Metronome.exe</OutputFile>
+      <OutputFile>./Debug/$(ProjectName)MIDI.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>.\Debug/d_Weird Metronome.pdb</ProgramDatabaseFile>
@@ -279,7 +285,9 @@
     <ClCompile Include="metronomeDlg.cpp" />
     <ClCompile Include="metronomeDlg_RegPersist.cpp" />
     <ClCompile Include="metronomeDlg_RegPersist_DragSize.cpp" />
-    <ClCompile Include="NewCore\BeatBox_MID.cpp" />
+    <ClCompile Include="NewCore\BeatBox_MID.cpp">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Support;NewCore;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
     <ClCompile Include="NewCore\BeatBox_WAV.cpp" />
     <ClCompile Include="NewCore\WaveFile.cpp" />
     <ClCompile Include="StdAfx.cpp">
@@ -308,19 +316,46 @@
     <ClInclude Include="NewCore\BeatBox_WAV.h" />
     <ClInclude Include="NewCore\IBeatBox.h" />
     <ClInclude Include="NewCore\WaveFile.h" />
+    <ClInclude Include="ProcessCmdLine.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Support\BscBblDlg.h" />
     <ClInclude Include="Support\BscSubclassWnd.h" />
     <ClInclude Include="Support\BscToolTip.h" />
     <ClInclude Include="Support\cBscFileVersion.h" />
+    <ClInclude Include="tclap\Arg.h" />
+    <ClInclude Include="tclap\ArgException.h" />
+    <ClInclude Include="tclap\ArgTraits.h" />
+    <ClInclude Include="tclap\CmdLine.h" />
+    <ClInclude Include="tclap\CmdLineInterface.h" />
+    <ClInclude Include="tclap\CmdLineOutput.h" />
+    <ClInclude Include="tclap\Constraint.h" />
+    <ClInclude Include="tclap\DocBookOutput.h" />
+    <ClInclude Include="tclap\HelpVisitor.h" />
+    <ClInclude Include="tclap\IgnoreRestVisitor.h" />
+    <ClInclude Include="tclap\MultiArg.h" />
+    <ClInclude Include="tclap\MultiSwitchArg.h" />
+    <ClInclude Include="tclap\OptionalUnlabeledTracker.h" />
+    <ClInclude Include="tclap\StandardTraits.h" />
+    <ClInclude Include="tclap\StdOutput.h" />
+    <ClInclude Include="tclap\SwitchArg.h" />
+    <ClInclude Include="tclap\UnlabeledMultiArg.h" />
+    <ClInclude Include="tclap\UnlabeledValueArg.h" />
+    <ClInclude Include="tclap\ValueArg.h" />
+    <ClInclude Include="tclap\ValuesConstraint.h" />
+    <ClInclude Include="tclap\VersionVisitor.h" />
+    <ClInclude Include="tclap\Visitor.h" />
+    <ClInclude Include="tclap\XorHandler.h" />
+    <ClInclude Include="tclap\ZshCompletionOutput.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\metronome.ico" />
+    <Image Include="res\volume_icon_2.ico" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="metronome.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="README.md" />
     <None Include="res\metronome.rc2" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

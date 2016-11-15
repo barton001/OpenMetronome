@@ -38,6 +38,7 @@ public:
                  std::vector<int               > const & aVolumes,        //These are the 9 instrument volumes visible down the screen   ;supplied reference must persist beyond the lifetime of this class's instance
                  std::vector<int               > const & aBeatSizes,      //These are the 9 instrument beat sizes visible down the screen;supplied reference must persist beyond the lifetime of this class's instance
                  unsigned long                   const   BeatsPerMinute,
+				 float							 const	 MasterVolume,
 				 unsigned long					 const   TempoMultiplier,	// BHB
 				 unsigned long					 const   BeatsPerBar,
 				 unsigned long					 const   nPlayTheFirst_n_BeatsInBarAtAltTempo,
@@ -51,7 +52,8 @@ public:
     virtual void Play(); //See IBeatBox
     virtual void Stop(); //See IBeatBox
     virtual void SetTempo(unsigned long const BeatsPerMinute); //See IBeatBox
-    virtual void SetInstrumentVolume(unsigned long const nInstrumentNum, char const nVolume    ) {m_aVolumes    [nInstrumentNum] = nVolume    ;}; //See IBeatBox
+	virtual void SetVolume(float MasterVolume); //See IBeatBox
+	virtual void SetInstrumentVolume(unsigned long const nInstrumentNum, char const nVolume    ) {m_aVolumes    [nInstrumentNum] = nVolume    ;}; //See IBeatBox
     virtual void SetInstrument      (unsigned long const nInstrumentNum, int  const nInstrument) {m_aInstruments[nInstrumentNum] = nInstrument;}; //See IBeatBox
     virtual std::basic_string<TCHAR> GetLastErr() const {return m_strLastError;}; //See IBeatBox
 
@@ -65,6 +67,7 @@ private: //Constants
 	double									m_NextBeatDelay_ms;	// Calculated in constructor
 	double									m_NextAltBeatDelay_ms;	// Calculated in constructor
 	double									m_FirstOnBeatDelay_ms;	// Calculated in constructor
+	float									m_MasterVolume;  // Copy of constructor param
 
     std::vector<std::vector<long> > const   m_aInstrumentNums; //Copy of constructor param
     std::vector<int               >         m_aInstruments   ; //Copy of constructor param

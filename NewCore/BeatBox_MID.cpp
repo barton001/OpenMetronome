@@ -54,6 +54,7 @@ void CBeatBox_MID::BeatNotificationThread()
 	double NextBeatDelay_ms;
 	unsigned int beatnum = 0;
 
+
     MMRESULT midi_result = midiOutOpen(&hmo, MIDI_MAPPER, NULL, 0, CALLBACK_NULL);
 	ErrorCheck(midi_result == MMSYSERR_NOERROR, _T("Cannot open default MIDI Device! Unable to produce audio output."), true); //!!!:Project-Global: grep Errorcheck, m_strLastError and translate the strings into Spanish
 
@@ -67,7 +68,7 @@ void CBeatBox_MID::BeatNotificationThread()
             if(index >= 0)
             {
                 long const instrument = TO_MIDI(m_aInstruments[index]);
-                long const volume     = m_aVolumes[index];
+				long const volume     = (long)(m_aVolumes[index] * m_MasterVolume);
 
 			    int const midi_event = 
 				      (volume		<< 16)
@@ -146,6 +147,7 @@ CBeatBox_MID::CBeatBox_MID(std::vector<std::vector<long> > const & aInstrumentNu
                            std::vector<int> const & aVolumes,
                            std::vector<int> const & aBeatSizes,
                            unsigned long    const   BeatsPerMinute,
+						   float			const   MasterVolume,
 						   unsigned long	const	TempoMultiplier,
 						   unsigned long	const   BeatsPerBar,
 						   unsigned long	const   nPlayTheFirst_n_BeatsInBarAtAltTempo,
@@ -159,6 +161,7 @@ CBeatBox_MID::CBeatBox_MID(std::vector<std::vector<long> > const & aInstrumentNu
     m_aVolumes(aVolumes),
     m_aBeatSizes(aBeatSizes),
     m_BeatsPerMinute(BeatsPerMinute),
+	m_MasterVolume(MasterVolume),
 	m_TempoMultiplier(TempoMultiplier),
 	m_BeatsPerBar(BeatsPerBar),
 	m_nPlayTheFirst_n_BeatsInBarAtAltTempo(nPlayTheFirst_n_BeatsInBarAtAltTempo),
@@ -270,3 +273,8 @@ void CBeatBox_MID::SetTempo(unsigned long const BeatsPerMinute)
 	}
 }
 //--------------------------------------------------------------------------------------------------
+
+void CBeatBox_MID::SetVolume(float MasterVolume)
+{
+	m_MasterVolume = MasterVolume;
+}

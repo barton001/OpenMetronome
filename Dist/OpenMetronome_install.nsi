@@ -4,17 +4,17 @@
   !include "FileFunc.nsh"  ; for GetSize and GetTime functions
 
 
-!define VERSION "6.0"
+!define VERSION "6.1"  ; last change: added master volume slider
 !define BASENAME "OpenMetronome"
 !define COMPANYNAME "BHBSoftware"
 !define REGKEY "Software\${COMPANYNAME}\Open Metronome"
 !define ARPKEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${BASENAME}"
-
+!define SMDIRECTORY "$SMPROGRAMS\${BASENAME}"
 ; The name of the installer
-Name "${BASENAME} v6.0"
+Name "${BASENAME} ${VERSION}"
 
-; The file to write
-OutFile "${BASENAME}_install.exe"
+; The installer file to create
+OutFile "${BASENAME}_${VERSION}_install.exe"
 
 ; The default installation directory
 InstallDir $PROGRAMFILES\${BASENAME}
@@ -31,11 +31,11 @@ RequestExecutionLevel admin
 ;Pages
 
   !insertmacro MUI_PAGE_WELCOME
-  !insertmacro MUI_PAGE_LICENSE "COPYING.txt"
-  !insertmacro MUI_PAGE_COMPONENTS
-##  !insertmacro MUI_PAGE_DIRECTORY
-  !insertmacro MUI_PAGE_INSTFILES
-  !insertmacro MUI_PAGE_FINISH
+  !insertmacro MUI_PAGE_LICENSE "COPYING.txt"	; the GPL license
+  !insertmacro MUI_PAGE_COMPONENTS	; allow user to select components (sections not marked RO)
+##  !insertmacro MUI_PAGE_DIRECTORY  ; allows user to select installation directory
+  !insertmacro MUI_PAGE_INSTFILES  ; show files being installed
+  !insertmacro MUI_PAGE_FINISH	; let user know we're finished
   
   !insertmacro MUI_UNPAGE_CONFIRM
   !insertmacro MUI_UNPAGE_INSTFILES
@@ -56,15 +56,19 @@ Section "WAV Version" WAV_install
   ; Set output path to the installation directory.
   SetOutPath $INSTDIR
   
-  ; Put files there
-  ;;File ${BASENAME}WAV.exe
-  ;;File ${BASENAME}MIDI.exe
+  ; Install the required files
+  File ${BASENAME}WAV.exe
+  File /r Samples
   File COPYING.txt
-  ;;File /r Samples
   
   ; Create the uninstaller
   WriteUninstaller $INSTDIR\Uninstall_${BASENAME}.exe
-  
+
+  ; Install Start Menu shortcut
+  CreateDirectory "${SMDIRECTORY}"
+  CreateShortCut "${SMDIRECTORY}\${BASENAME}WAV.lnk" $INSTDIR\${BASENAME}WAV.exe
+  CreateShortCut "${SMDIRECTORY}\Uninstall ${BASENAME}.lnk" $INSTDIR\Uninstall_${BASENAME}.exe
+    
   ; Add registry keys so user can uninstall from control panel's Add/Remove Programs
   WriteRegStr HKCU "${ARPKEY}" "DisplayName" "${BASENAME} ${VERSION}"
   WriteRegStr HKCU "${ARPKEY}" "UninstallString" "$\"$INSTDIR\Uninstall_${BASENAME}.exe$\""
@@ -88,21 +92,14 @@ Section "WAV Version" WAV_install
 	
  NotFreshInstall:
 
-  ; Install the required files
-  File ${BASENAME}WAV.exe
-  File /r Samples
-  
-  ; Install Start Menu shortcut
-  CreateDirectory "$SMPROGRAMS\${COMPANYNAME}"
-  CreateShortCut "$SMPROGRAMS\${COMPANYNAME}\${BASENAME}WAV.lnk" $INSTDIR\${BASENAME}WAV.exe
- 
+
 SectionEnd
 
 Section "MIDI Version" MIDI_install ; this is an optional install
 
   File ${BASENAME}MIDI.exe
-  CreateDirectory "$SMPROGRAMS\${COMPANYNAME}"
-  CreateShortCut "$SMPROGRAMS\${COMPANYNAME}\${BASENAME}MIDI.lnk" $INSTDIR\${BASENAME}MIDI.exe
+  CreateDirectory "${SMDIRECTORY}"
+  CreateShortCut "${SMDIRECTORY}\${BASENAME}MIDI.lnk" $INSTDIR\${BASENAME}MIDI.exe
 
 SectionEnd
 
@@ -385,9 +382,10 @@ Section "Uninstall"
   ; Remove desktop shortcut
   Delete $DESKTOP\${BASENAME}WAV.lnk
   Delete $DESKTOP\${BASENAME}MIDI.lnk
-  Delete "$SMPROGRAMS\${COMPANYNAME}\${BASENAME}WAV.lnk"
-  Delete "$SMPROGRAMS\${COMPANYNAME}\${BASENAME}MIDI.lnk"
-  RMDir "$SMPROGRAMS\${COMPANYNAME}" ; only works if empty
+  Delete "${SMDIRECTORY}\${BASENAME}WAV.lnk"
+  Delete "${SMDIRECTORY}\${BASENAME}MIDI.lnk"
+  Delete "${SMDIRECTORY}\Uninstall ${BASENAME}.lnk"
+  RMDir "${SMDIRECTORY}" ; only works if empty
 
   ; Remove registry branch where OpenMetronome keeps its settings
   DeleteRegKey HKCU "${REGKEY}"

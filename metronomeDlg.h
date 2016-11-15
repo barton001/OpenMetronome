@@ -68,6 +68,8 @@ protected: //Member variables
     unsigned long m_BPMeasure;
 	unsigned long m_BPMinute ;
     std::vector<group_beat>    m_BeatData;
+	float m_MasterVolume;
+	HWND m_MasterVolumeSlider;
 
     //-1 for silence, or use AlphaInstrumentStrings[MidiToAlpha[m_midi_instrument[instrument_num]]] 
     //to get string description of MIDI instrument associated with Midi-voice dropdown

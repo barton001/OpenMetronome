@@ -229,6 +229,7 @@ CBeatBox_WAV::CBeatBox_WAV(std::vector<std::vector<long> > const & aInstrumentNu
                            std::vector<int               > const & aVolumes,       
                            std::vector<int               > const & aBeatSizes,     
                            unsigned long                   const   BeatsPerMinute,
+						   float						   const   MasterVolume,	// BHB
 						   unsigned long				   const   TempoMultiplier,  // BHB
 						   unsigned long                   const   BeatsPerBar,
 						   unsigned long                   const   nPlayTheFirst_n_BeatsInBarAtAltTempo,
@@ -247,6 +248,7 @@ CBeatBox_WAV::CBeatBox_WAV(std::vector<std::vector<long> > const & aInstrumentNu
     m_myWavDefault  ((SamplesDirectory().append(s_DefaultWAV)).c_str()),
     m_hEvtPollPlayback(CreateEvent(NULL, FALSE, FALSE, NULL)),
     m_BeatsPerMinute(BeatsPerMinute),
+	m_MasterVolume(MasterVolume),	// BHB
 	m_TempoMultiplier(TempoMultiplier),  // BHB
     m_bClip(false),
     m_SampleToLoopDuration_bytes(0)
@@ -609,7 +611,7 @@ void CBeatBox_WAV::Create1MinOfSamples() //I might consider threading this, and 
                 long iSample = (unsigned long)((((double)(m_fmtWAV.nSamplesPerSec*(BytesPerSample)))* SecondsIntoSample) + 0.5);
 
                 iSample = (div((int)(iSample/2),(int)BytesPerSample).quot) * BytesPerSample;//Round to boundary; //it is isample/2 since we're using isample as an index into 16 bit array now, whereas before was 8 bit array
-
+				
                 if ((MultiVoicePeakHi <= SHRT_MAX) && (MultiVoicePeakLo >= SHRT_MIN))
                 {
                     for (unsigned long i = 0; (i < strMultiVoiceBuf.size()) && (iSample+i < s_a1MinOfSamples.size()); ++i)
@@ -619,7 +621,7 @@ void CBeatBox_WAV::Create1MinOfSamples() //I might consider threading this, and 
                         while (iIndex > WrapThreshold)
                             iIndex -= WrapThreshold;
 
-                        __int32 i32Dest = ((__int32)s_a1MinOfSamples[iIndex]) + strMultiVoiceBuf[i];
+                        __int32 i32Dest = ((__int32)s_a1MinOfSamples[iIndex]) + (__int32)(m_MasterVolume * strMultiVoiceBuf[i]);
                         if ((i32Dest <= SHRT_MAX) && (i32Dest >= SHRT_MIN))
                             s_a1MinOfSamples[iIndex] = i32Dest;
                         else
@@ -641,7 +643,7 @@ void CBeatBox_WAV::Create1MinOfSamples() //I might consider threading this, and 
                         while (iIndex > WrapThreshold)
                             iIndex -= WrapThreshold;
 
-                        float fDest = s_a1MinOfSamples[iIndex] + (Scale  * ((float)strMultiVoiceBuf[i]));
+                        float fDest = s_a1MinOfSamples[iIndex] + (m_MasterVolume * Scale  * ((float)strMultiVoiceBuf[i]));
                         if ((fDest < SHRT_MAX) && (fDest > SHRT_MIN))
                             s_a1MinOfSamples[iIndex] = (__int16)fDest;
                         else
@@ -677,5 +679,11 @@ void CBeatBox_WAV::PlayWAVAndSendInitialBeat()
 }
 //--------------------------------------------------------------------------------------------------
 
-
+void CBeatBox_WAV::SetVolume(float MasterVolume)
+{
+	if (m_MasterVolume != MasterVolume) {
+		m_MasterVolume = MasterVolume;
+		Create1MinOfSamples();
+	}
+}
 #endif //#ifndef USE_WEIRD_MIDI
