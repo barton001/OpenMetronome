@@ -71,3 +71,6 @@ I have no mute triangle, however!  The Mute Triangle is still from the Francisco
 79 Open Cuíca			Quica Low
 80 Mute Triangle		(Still from Francisco's set)
 81 Open Triangle		Triangle
+
+[Update: 16-Nov-2016] Replaced the WAV file for "Bass Drum 1" with the "808-Kicks09.wav" sample file
+that comes in the 808_drum_kit package found at http://soundpacks.com

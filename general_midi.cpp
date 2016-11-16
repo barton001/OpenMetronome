@@ -35,7 +35,7 @@ TCHAR AlphaInstrumentStrings[][GM1_TRACK10_NUM_VOICES] =
 	_T("Hi Bongo"),            //_T("Bongo Agudo"),           
 	_T("Low Bongo"),           //_T("Bongo Grave"),           
 	_T("Cabasa"),              //_T("Cabasa"),                
-	_T("hand clap"),           //_T("Palmada"),               
+	_T("Hand Clap"),           //_T("Palmada"),               
 	_T("Claves"),              //_T("Claves"),                
 	_T("Cowbell"),             //_T("Cencerro"),              
 	_T("Mute Cuica"),          //_T("Cuica Tapada"),          

@@ -380,7 +380,7 @@ BEGIN
     IDS_MIDI_ALPHA_004      "Hi Bongo"
     IDS_MIDI_ALPHA_005      "Low Bongo"
     IDS_MIDI_ALPHA_006      "Cabasa"
-    IDS_MIDI_ALPHA_007      "hand clap"
+    IDS_MIDI_ALPHA_007      "Hand Clap"
 END
 
 STRINGTABLE
