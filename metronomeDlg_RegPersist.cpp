@@ -231,11 +231,6 @@ void CMetronomeDlg_RegPersist::LoadSettings(LPCTSTR preset_name)
         m_BPMinute = 120;
         RegQueryValueEx(hkey, _T("BPMinute"), 0, &dwType, (PBYTE)&m_BPMinute, &dwSize);
 
-		// Master volume
-		DWORD iMasterVolume = 100;
-		RegQueryValueEx(hkey, _T("MasterVolume"), 0, &dwType, (PBYTE)&iMasterVolume, &dwSize);
-		::SendMessage(GET_HWND(IDC_MASTERVOLUME_SLIDER), TBM_SETPOS, TRUE, iMasterVolume); // BHB
-		m_MasterVolume = iMasterVolume / 100.0f;
 
 		// BHB - Don't keep separate hotkey settings for each preset; I think hotkeys should be global
 		if (preset_name == NULL) {
@@ -353,6 +348,12 @@ void CMetronomeDlg_RegPersist::LoadSettings(LPCTSTR preset_name)
         // combo box to have the correct one selected
         if(preset_name == NULL)
         {
+			// Master volume
+			DWORD iMasterVolume = 100;
+			RegQueryValueEx(hkey, _T("MasterVolume"), 0, &dwType, (PBYTE)&iMasterVolume, &dwSize);
+			::SendMessage(GET_HWND(IDC_MASTERVOLUME_SLIDER), TBM_SETPOS, TRUE, iMasterVolume); // BHB
+			m_MasterVolume = iMasterVolume / 100.0f;
+
             // load the presets
             int a = 0;
             unsigned long StringBufLength = sizeof(stringbuf)/sizeof(stringbuf[0]);

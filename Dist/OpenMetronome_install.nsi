@@ -4,7 +4,7 @@
   !include "FileFunc.nsh"  ; for GetSize and GetTime functions
 
 
-!define VERSION "6.1"  ; last change: added master volume slider
+!define VERSION "6.2"  ; last change: bugfix - master volume was reset to 100% when loading a preset
 !define BASENAME "OpenMetronome"
 !define COMPANYNAME "BHBSoftware"
 !define REGKEY "Software\${COMPANYNAME}\Open Metronome"
