@@ -8,4 +8,4 @@ realistic drum beats. Version 6.1 adds a master volume control.
 
 For more information, check out the <a href="http://bhbsoftware.com/OpenMetronome">home page for OpenMetronome 6</a>.
 
-<a href="https://github.com/barton001/OpenMetronome/raw/master/Dist/OpenMetronome_6.1_install.exe">Download the installer</a>
+<a href="https://github.com/barton001/OpenMetronome/raw/master/Dist/OpenMetronome_6.2_install.exe">Download the installer</a>
